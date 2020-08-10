@@ -36,6 +36,11 @@ where <fg=green>/path/to/file</> is path to existing local file or remote URL an
 - <fg=green>url</> — use this option for upload file from remote URL (and pass this url as argument, indeed)
 
 You can use relative to project root directory path for your file.
+
+You can define any API-related option with this command:
+- <fg=green>mime-type</> — target mime-type for file
+- <fg=green>filename</> — target filename
+- <fg=green>store</> — store mode for file ('auto' as default)
 TEXT;
 
     protected static $defaultName = 'app:upload-file';
@@ -61,6 +66,9 @@ TEXT;
             ->setDescription('Command for upload file to Uploadcare trough file API')
             ->addArgument('path', InputArgument::REQUIRED, 'Path to uploaded file')
             ->addOption('mode', null, InputOption::VALUE_OPTIONAL, 'Way to upload file', 'path')
+            ->addOption('mime-type', null, InputOption::VALUE_OPTIONAL, 'Target MIME-type')
+            ->addOption('filename', null, InputOption::VALUE_OPTIONAL, 'Target filename')
+            ->addOption('store', null, InputOption::VALUE_OPTIONAL, 'Store file in storage', 'auto')
             ->setHelp(self::$help)
         ;
     }
@@ -73,20 +81,18 @@ TEXT;
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
-
         $this->validateInput($input);
         $path = $input->getArgument('path');
         $mode = $input->getOption('mode');
         switch ($mode) {
             case 'resource':
-                $this->asResource($path, $io);
+                $this->asResource($path, $input, $output);
                 break;
             case 'path':
-                $this->asPath($path, $io);
+                $this->asPath($path, $input, $output);
                 break;
             case 'url':
-                $this->asUrl($path, $io);
+                $this->asUrl($path, $input, $output);
                 break;
         }
 
@@ -96,11 +102,13 @@ TEXT;
     /**
      * Upload file from resource.
      *
-     * @param string       $path
-     * @param SymfonyStyle $io
+     * @param string          $path
+     * @param InputInterface  $input
+     * @param OutputInterface $output
      */
-    protected function asResource(string $path, SymfonyStyle $io): void
+    protected function asResource(string $path, InputInterface $input, OutputInterface $output): void
     {
+        $io = new SymfonyStyle($input, $output);
         $io->title(\sprintf('Try to upload <info>%s</info> as resource', $path));
         $handle = \fopen($path, 'rb');
         $io->writeln('Resource created');
@@ -111,7 +119,7 @@ TEXT;
         }
         $table->render();
         try {
-            $result = $this->api->uploader()->fromResource($handle);
+            $result = $this->api->uploader()->fromResource($handle, $input->getOption('mime-type'), $input->getOption('filename'), $input->getOption('store'));
         } catch (\Exception $e) {
             throw new RuntimeException($e->getMessage());
         }
@@ -123,15 +131,17 @@ TEXT;
     /**
      * Upload file from path.
      *
-     * @param string       $path
-     * @param SymfonyStyle $io
+     * @param string          $path
+     * @param InputInterface  $input
+     * @param OutputInterface $output
      */
-    protected function asPath(string $path, SymfonyStyle $io): void
+    protected function asPath(string $path, InputInterface $input, OutputInterface $output): void
     {
+        $io = new SymfonyStyle($input, $output);
         $io->title(\sprintf('Try to upload <info>%s</info> from path', $path));
 
         try {
-            $result = $this->api->uploader()->fromPath($path);
+            $result = $this->api->uploader()->fromPath($path, $input->getOption('mime-type'), $input->getOption('filename'), $input->getOption('store'));
         } catch (\Exception $e) {
             throw new RuntimeException($e->getMessage());
         }
@@ -143,15 +153,17 @@ TEXT;
     /**
      * Upload file from remote URL.
      *
-     * @param string       $path
-     * @param SymfonyStyle $io
+     * @param string          $path
+     * @param InputInterface  $input
+     * @param OutputInterface $output
      */
-    protected function asUrl(string $path, SymfonyStyle $io): void
+    protected function asUrl(string $path, InputInterface $input, OutputInterface $output): void
     {
+        $io = new SymfonyStyle($input, $output);
         $io->title(\sprintf('Try to upload <info>%s</info> from url', $path));
 
         try {
-            $result = $this->api->uploader()->fromUrl($path, 'image/jpeg');
+            $result = $this->api->uploader()->fromUrl($path, $input->getOption('mime-type'), $input->getOption('filename'), $input->getOption('store'));
         } catch (\Exception $e) {
             throw new RuntimeException($e->getMessage());
         }
@@ -235,7 +247,10 @@ TEXT;
             ['Duration', $videoInfo->getDuration()],
             ['Format', $videoInfo->getFormat()],
             ['Bitrate', $videoInfo->getBitrate()],
-            // TODO videoInfo
+            ['Width', $videoInfo->getVideo()->getWidth()],
+            ['Height', $videoInfo->getVideo()->getHeight()],
+            ['Frame rate', $videoInfo->getVideo()->getFrameRate()],
+            ['Codec', $videoInfo->getVideo()->getCodec()],
         ]);
     }
 
