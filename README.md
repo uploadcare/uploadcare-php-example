@@ -10,9 +10,25 @@ An example project based on Symfony Framework, but the library itself can be use
 - [Demo-project installation](#install-demo-project)
 - [Container initialization](#container-initialization)
 - [Direct initialization](#direct-initialization)
-- [Console usage](#console-usage)
-    - [Upload file from console](#upload-file-from-console)
-    - [Get files list and file info](#files-and-file-info)
+- [Upload file from console](#upload-file)
+- [Get files list and file info](#files-and-file-info)
+- [Example of store file](#store-file)
+- [Example of delete file](#delete-file)
+- [Batch store files](#batch-store-files)
+- [Batch delete files](#batch-delete-files)
+- [Create group of files](#create-group)
+- [List of file groups](#list-of-file-groups)
+- [Group info](#group-info)
+- [Project info](#project-info)
+- [List of project webhooks](#list-of-webhooks)
+- [Create webhook](#create-webhook)
+- [Update webhook](#update-webhook)
+- [Delete webhook](#delete-webhook)
+- [Conversion operations](#conversion-operations)
+    - [Convert document](#convert-documen)
+    - [Get document conversion job status](#document-conversion-status)
+    - [Convert video](#convert-video)
+    - [Video conversion job status](#video-conversion-status)
 
 ## Install demo-project
 
@@ -114,9 +130,9 @@ Or make API instance with factory:
 $api = \Uploadcare\Api::create($_ENV['UPLOADCARE_PUBLIC_KEY'], $_ENV['UPLOADCARE_PRIVATE_KEY']);
 ```
 
-## Console usage
+### Upload file
 
-### Upload file from console
+### Console usage example
 
 See `App\Command\UploadFileCommand` (`src/Command/UploadFileCommand.php`);
 
@@ -127,3 +143,9 @@ All those ways implemented in example command.
 Run command as `bin/console app:upload-file /path/to/file`.
 
 See `app:upload-file --help` for information and run examples.
+
+### Web usage example
+
+See `App\Controller\UploadController` for controller example and `templates/upload/index.html.twig` for template markup.
+
+In this example you can see the way to organize upload operations for user web-interface. Most of web-services restricts the upload size, and this is a simple example with one-piece uploading with size restricted by the server. 
