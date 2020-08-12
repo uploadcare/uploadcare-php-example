@@ -149,3 +149,11 @@ See `app:upload-file --help` for information and run examples.
 See `App\Controller\UploadController` for controller example and `templates/upload/index.html.twig` for template markup.
 
 In this example you can see the way to organize upload operations for user web-interface. Most of web-services restricts the upload size, and this is a simple example with one-piece uploading with size restricted by the server. 
+
+Steps to run example:
+
+- run development web-server ([Symfony CLI](https://symfony.com/download) or whatever you prefer);
+- open `https://localhost:8000/upload` page in your preferred browser;
+- upload file and see the result
+
+![File upload](references/file-upload.png "File upload")
