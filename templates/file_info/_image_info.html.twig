@@ -1,0 +1,46 @@
+<h4>Image info</h4>
+
+<div class="table-responsive">
+  <table class="table table-condensed table-bordered table-hover mt-2">
+    <tr>
+      <th>Color Mode</th>
+      <td>{{ file.imageInfo.colorMode }}</td>
+    </tr>
+    <tr>
+      <th>Orientation</th>
+      <td>{{ file.imageInfo.orientation }}</td>
+    </tr>
+    <tr>
+      <th>Format</th>
+      <td>{{ file.imageInfo.format }}</td>
+    </tr>
+    <tr>
+      <th>Is image a sequence</th>
+      <td>{{ file.imageInfo.sequence ? 'Yes' : 'No' }}</td>
+    </tr>
+    <tr>
+      <th>Dimensions</th>
+      <td>{{ file.imageInfo.width }}×{{ file.imageInfo.height }}</td>
+    </tr>
+    <tr>
+      <th>Geo location</th>
+      <td>
+        {% if file.imageInfo.geoLocation is not null %}
+          {{ file.imageInfo.geoLocation.latitude }}, {{ file.imageInfo.geoLocation.longitude }}
+        {% else %}
+          No data
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <th>DPI</th>
+      <td>
+        {% if file.imageInfo.dpi is not null %}
+          {{ file.imageInfo.dpi[0] }}×{{ file.imageInfo.dpi[1] }}
+        {% else %}
+          No data
+        {% endif %}
+      </td>
+    </tr>
+  </table>
+</div>

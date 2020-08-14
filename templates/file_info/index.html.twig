@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}List files{% endblock %}
+
+{% block body %}
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Total files: {{ list.total }}</h5>
+  </div>
+  <ul class="list-group list-group-flush">
+    {% for file in list.results %}
+      <li class="list-group-item">
+        <a href="{{ path('file_info', {'uuid': file.uuid}) }}">{{ file.originalFilename }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+  <p class="text-right">You can upload file <a href="{{ path('upload_file') }}">here</a></p>
+
+{% endblock %}

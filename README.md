@@ -10,20 +10,23 @@ An example project based on Symfony Framework, but the library itself can be use
 - [Demo-project installation](#install-demo-project)
 - [Container initialization](#container-initialization)
 - [Direct initialization](#direct-initialization)
-- [Upload file from console](#upload-file)
-- [Get files list and file info](#files-and-file-info)
-- [Example of store file](#store-file)
-- [Example of delete file](#delete-file)
-- [Batch store files](#batch-store-files)
-- [Batch delete files](#batch-delete-files)
-- [Create group of files](#create-group)
-- [List of file groups](#list-of-file-groups)
-- [Group info](#group-info)
 - [Project info](#project-info)
-- [List of project webhooks](#list-of-webhooks)
-- [Create webhook](#create-webhook)
-- [Update webhook](#update-webhook)
-- [Delete webhook](#delete-webhook)
+- [File operations](#file-operations)
+    - [Upload file](#upload-file)
+    - [Get files list and file info](#files-and-file-info)
+    - [Example of store file](#store-file)
+    - [Example of delete file](#delete-file)
+    - [Batch store files](#batch-store-files)
+    - [Batch delete files](#batch-delete-files)
+- [Group operations](#group-operations)
+    - [Create group of files](#create-group)
+    - [List of file groups](#list-of-file-groups)
+    - [Group info](#group-info)
+- [Webhook operations](#webhook-operations)
+    - [List of project webhooks](#list-of-webhooks)
+    - [Create webhook](#create-webhook)
+    - [Update webhook](#update-webhook)
+    - [Delete webhook](#delete-webhook)
 - [Conversion operations](#conversion-operations)
     - [Convert document](#convert-documen)
     - [Get document conversion job status](#document-conversion-status)
@@ -130,6 +133,18 @@ Or make API instance with factory:
 $api = \Uploadcare\Api::create($_ENV['UPLOADCARE_PUBLIC_KEY'], $_ENV['UPLOADCARE_PRIVATE_KEY']);
 ```
 
+## Common information
+
+All web-examples accessible with development web-server by [Symfony CLI](https://symfony.com/download).
+
+## Project info
+
+You can retrieve your information of project by its public key.
+
+[Console example](src/Command/ProjectInfoCommand.php), [Web example](src/Controller/ProjectInfoController.php). Web example is accessible by `/project-info` route.
+
+## File operations
+
 ### Upload file
 
 ### Console usage example
@@ -152,8 +167,11 @@ In this example you can see the way to organize upload operations for user web-i
 
 Steps to run example:
 
-- run development web-server ([Symfony CLI](https://symfony.com/download) or whatever you prefer);
 - open `https://localhost:8000/upload` page in your preferred browser;
 - upload file and see the result
 
 ![File upload](references/file-upload.png "File upload")
+
+### Files and file info
+
+If you have any files in your project, you can see your files in root (`/`) route or with `app:file-info [file-id]` command. Examples in `src/Command/FileInfoCommand.php` (console) and `src/Controller/FileInfoController.php` (web).

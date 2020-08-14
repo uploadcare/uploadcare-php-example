@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}File "{{ file.originalFilename }}" info{% endblock %}
+
+{% block body %}
+  <a href="{{ path('file_list') }}">Back to files</a>
+  <hr>
+  {% include 'file_info/_common_file.html.twig' %}
+
+  {% if file.imageInfo is not null %}
+    {% include 'file_info/_image_info.html.twig' %}
+  {% endif %}
+
+  {% if file.videoInfo is not null %}
+    {% include 'file_info/_video_info.html.twig' %}
+  {% endif %}
+{% endblock %}

@@ -16,9 +16,6 @@ use Uploadcare\Interfaces\File\{CollectionInterface, FileInfoInterface};
  */
 class UploadController extends AbstractController
 {
-    /**
-     * @var Api
-     */
     private Api $api;
 
     public function __construct(Api $api)
@@ -40,7 +37,7 @@ class UploadController extends AbstractController
                 'required' => true,
                 'constraints' => [
                     new File([
-                        'maxSize' => '1024k',
+                        'maxSize' => '2M',
                     ]),
                 ],
             ])

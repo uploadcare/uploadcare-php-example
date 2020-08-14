@@ -1,0 +1,64 @@
+<h4>Remote file</h4>
+
+<div class="table-responsive">
+  <table class="table table-condensed table-bordered table-hover mt-2">
+    <tr>
+      <th>UUID</th>
+      <td>{{ file.uuid }}</td>
+    </tr>
+    <tr>
+      <th>Original name</th>
+      <td>{{ file.originalFilename }}</td>
+    </tr>
+    <tr>
+      <th>Stored date</th>
+      <td>{% if file.datetimeStored %}{{ file.datetimeStored | date }}{% else %}--{% endif %}</td>
+    </tr>
+    <tr>
+      <th>Uploaded date</th>
+      <td>{% if file.datetimeUploaded %}{{ file.datetimeUploaded | date }}{% else %}--{% endif %}</td>
+    </tr>
+    <tr>
+      <th>Removed date</th>
+      <td>{% if file.datetimeRemoved %}{{ file.datetimeRemoved | date }}{% else %}--{% endif %}</td>
+    </tr>
+    <tr>
+      <th>If file an image</th>
+      <td>{{ file.image ? 'Yes' : 'No' }}</td>
+    </tr>
+    <tr>
+      <th>If file ready</th>
+      <td>{{ file.ready ? 'Yes' : 'No' }}</td>
+    </tr>
+    <tr>
+      <th>Mime type</th>
+      <td>{{ file.mimeType }}</td>
+    </tr>
+    <tr>
+      <th>Original file URL</th>
+      <td>{{ file.originalFileUrl }}</td>
+    </tr>
+    <tr>
+      <th>File variations</th>
+      <td>
+        {% if file.variations is not empty %}
+          {% for var in file.variations %}
+            {{ var }}<br>
+          {% endfor %}
+        {% else %}
+          File variations is empty
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <th>Recognition info</th>
+      <td>
+        {% if file.rekognitionInfo is not empty %}
+        {% else %}
+          Recognition info is empty
+        {% endif %}
+      </td>
+    </tr>
+  </table>
+</div>
+

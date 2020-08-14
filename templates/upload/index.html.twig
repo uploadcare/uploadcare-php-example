@@ -20,7 +20,10 @@
       {% else %}
         <ul class="list-unstyled">
         {% for fileInfo in files %}
-          <li>{{ fileInfo.originalFilename }} (<code>{{ fileInfo.uuid }}</code>)</li>
+          <li>
+            <a href="{{ path('file_info', {'uuid': fileInfo.uuid}) }}">{{ fileInfo.originalFilename }}</a>
+            (<code>{{ fileInfo.uuid }}</code>)
+          </li>
         {% endfor %}
         </ul>
       {% endif %}
