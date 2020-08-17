@@ -14,4 +14,6 @@
   {% if file.videoInfo is not null %}
     {% include 'file_info/_video_info.html.twig' %}
   {% endif %}
+
+  <a class="btn btn-danger" href="{{ path('delete_file', {'uuid': file.uuid}) }}">Delete file</a>
 {% endblock %}

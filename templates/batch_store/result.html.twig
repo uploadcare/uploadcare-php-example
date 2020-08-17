@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Batch store result{% endblock %}
+
+{% block body %}
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{ result.status }}</h5>
+
+      <ul class="list-unstyled">
+        {% for success in result.result %}
+          <li>File <a href="{{ path('file_info', {'uuid': success.uuid}) }}">{{ success.originalFilename }}</a>
+            successfully stored
+          </li>
+        {% endfor %}
+      </ul>
+
+      {% if result.problems is not empty %}
+        <ul class="list-unstyled">
+          {% for problem in result.problems %}
+            <li>
+              Problem with file {{ problem.id }}: {{ problem.reason }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <h5 class="card-title">Response has not any problems</h5>
+      {% endif %}
+
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block title %}Batch delete file{% endblock %}
+
+{% block body %}
+  <div class="card">
+    {{ form_start(form) }}
+    <div class="card-body">
+      {{ form_rest(form) }}
+      <button class="btn btn-danger" type="submit">Delete files</button>
+    </div>
+    {{ form_end(form) }}
+  </div>
+{% endblock %}

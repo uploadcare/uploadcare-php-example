@@ -175,3 +175,19 @@ Steps to run example:
 ### Files and file info
 
 If you have any files in your project, you can see your files in root (`/`) route or with `app:file-info [file-id]` command. Examples in `src/Command/FileInfoCommand.php` (console) and `src/Controller/FileInfoController.php` (web).
+
+## Store file
+
+This option has a sense when You upload file with `0` option in "Store" field. Anyway, you can call `store` method on any file. Example in `StoreFileController`.
+
+## Delete file
+
+You can delete any of your files from `file-info` screen. Example in `DeleteFileController`.
+
+## Batch store files
+
+You can apply the "Store" operation for all (or part) of your files. See `/batch-store` route and `BatchStoreController` for examples.
+
+## Batch delete files
+
+You can delete all or part of you files with "Batch delete" operation. See `/batch-delete` route and `BatchDeleteController` for examples.

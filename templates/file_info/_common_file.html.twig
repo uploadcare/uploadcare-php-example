@@ -1,4 +1,7 @@
-<h4>Remote file</h4>
+<h4 class="d-flex justify-content-between align-items-center">
+  Remote file
+  <a href="{{ path('store_file', {'uuid': file.uuid}) }}" class="btn btn-secondary">Store</a>
+</h4>
 
 <div class="table-responsive">
   <table class="table table-condensed table-bordered table-hover mt-2">
