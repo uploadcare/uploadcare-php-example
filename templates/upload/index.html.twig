@@ -29,3 +29,19 @@
   <button class="btn btn-primary" type="submit">Upload file</button>
   {{ form_end(form) }}
 {% endblock %}
+
+{% block javascripts %}
+  parents()
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const fileInputs = document.querySelectorAll('.custom-file-input');
+      fileInputs.forEach(inp => {
+        inp.addEventListener('change', evt => {
+          let labelElement = evt.currentTarget.nextSibling;
+          labelElement.innerText = evt.currentTarget.files[0].name;
+        })
+      })
+    });
+  </script>
+{% endblock %}
