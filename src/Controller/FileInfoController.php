@@ -34,6 +34,7 @@ class FileInfoController extends AbstractController
 
         return $this->render('file_info/index.html.twig', [
             'list' => $this->api->file()->listFiles(...\array_values($parameters)),
+            'project' => $this->api->project()->getProjectInfo(),
         ]);
     }
 
