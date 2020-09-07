@@ -8,26 +8,8 @@
     <a class="small" href="{{ path('batch_delete_file') }}">Batch delete files</a>
   </p>
 
-<div class="card">
-  <div class="card-body">
-    <h5 class="card-title">Total files: {{ list.total }}</h5>
-  </div>
-  {% if list.results is empty %}
-    <div class="card-body">
-      <h5 class="card-title">
-        You have no files in your project. <a href="{{ path('upload_file') }}">Upload a file</a>.
-      </h5>
-    </div>
-  {% endif %}
-  <ul class="list-group list-group-flush">
-    {% for file in list.results %}
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        <a href="{{ path('file_info', {'uuid': file.uuid}) }}">{{ file.originalFilename }}</a>
-        <a href="{{ path('store_file', {'uuid': file.uuid}) }}" class="btn btn-secondary btn-sm">Store</a>
-      </li>
-    {% endfor %}
-  </ul>
-</div>
+{% include 'file_info/_file_list_table.html.twig' %}
+
   {% if list.results is not empty %}
   <p class="text-right">You can upload file <a href="{{ path('upload_file') }}">here</a></p>
   {% endif %}

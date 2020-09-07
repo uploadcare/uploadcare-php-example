@@ -4,23 +4,7 @@
 
 {% block body %}
 
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">Your files</h5>
-      {% if files is empty %}
-        Empty
-      {% else %}
-        <ul class="list-unstyled">
-        {% for fileInfo in files %}
-          <li>
-            <a href="{{ path('file_info', {'uuid': fileInfo.uuid}) }}">{{ fileInfo.originalFilename }}</a>
-            (<code>{{ fileInfo.uuid }}</code>)
-          </li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    </div>
-  </div>
+  {% include 'file_info/_file_list_table.html.twig' %}
   <hr>
 
   {{ form_start(form) }}
@@ -31,7 +15,6 @@
 {% endblock %}
 
 {% block javascripts %}
-  parents()
 
   <script>
     window.addEventListener('DOMContentLoaded', () => {

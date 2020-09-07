@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\File;
 use Uploadcare\Api;
-use Uploadcare\Interfaces\File\{CollectionInterface, FileInfoInterface};
+use Uploadcare\Interfaces\Response\ListResponseInterface;
 
 /**
  * @Route(path="/upload", name="upload_file")
@@ -37,7 +37,7 @@ class UploadController extends AbstractController
                 'required' => true,
                 'constraints' => [
                     new File([
-                        'maxSize' => '2M',
+                        'maxSize' => '24M',
                     ]),
                 ],
             ])
@@ -70,16 +70,13 @@ class UploadController extends AbstractController
         }
 
         return $this->render('upload/index.html.twig', [
-            'files' => $this->getFiles(),
+            'list' => $this->getFiles(),
             'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @return CollectionInterface|FileInfoInterface[]
-     */
-    protected function getFiles(): CollectionInterface
+    protected function getFiles(): ListResponseInterface
     {
-        return $this->api->file()->listFiles()->getResults();
+        return $this->api->file()->listFiles();
     }
 }
