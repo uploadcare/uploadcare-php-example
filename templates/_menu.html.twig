@@ -1,0 +1,13 @@
+<ul class="nav nav-pills flex-column">
+  <li class="nav-item">
+    <a class="nav-link {{ app.request.pathInfo == path('file_list') ? 'active' : '' }}" href="{{ path('file_list') }}">Files</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {{ app.request.pathInfo == path('upload_file') ? 'active' : '' }}"
+       href="{{ path('upload_file') }}">Upload file</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {{ app.request.pathInfo == path('project_info') ? 'active' : '' }}"
+       href="{{ path('project_info') }}">Project Info</a>
+  </li>
+</ul>

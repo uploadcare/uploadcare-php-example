@@ -4,18 +4,21 @@
 
 {% block body %}
   <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">{{ project.name }}</h5>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Public key: <code>{{ project.pubKey }}</code></li>
-      <li class="list-group-item">Is auto-store enabled: <code>{{ project.autostoreEnabled ? 'True' : 'False' }}</code></li>
-      <li class="list-group-item">
-        Collaborators:
-        {% if project.collaborators is empty %}<code>Empty</code>{% else %}
-          {% for cl in project.collaborators %}{{ cl }}{% endfor %}
-        {% endif %}
-      </li>
-    </ul>
+  <div class="card-body">
+    <h5 class="card-title"><a
+          href="https://uploadcare.com/accounts/settings/projects/{{ project.pubKey }}/usage/">{{ project.name }}</a>
+    </h5>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Public key: <code>{{ project.pubKey }}</code></li>
+    <li class="list-group-item">Is auto-store enabled: <code>{{ project.autostoreEnabled ? 'True' : 'False' }}</code>
+    </li>
+    <li class="list-group-item">
+      Collaborators:
+      {% if project.collaborators is empty %}<code>Empty</code>{% else %}
+        {% for cl in project.collaborators %}{{ cl }}{% endfor %}
+      {% endif %}
+    </li>
+  </ul>
   </div>
 {% endblock %}

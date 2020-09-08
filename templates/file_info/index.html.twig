@@ -8,27 +8,6 @@
     <a class="small" href="{{ path('batch_delete_file') }}">Batch delete files</a>
   </p>
 
-{% include 'file_info/_file_list_table.html.twig' %}
-
-  {% if list.results is not empty %}
-  <p class="text-right">You can upload file <a href="{{ path('upload_file') }}">here</a></p>
-  {% endif %}
-
-  <h4>Project info</h4>
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title"><a href="https://uploadcare.com/accounts/settings/projects/{{ project.pubKey }}/usage/">{{ project.name }}</a></h5>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Public key: <code>{{ project.pubKey }}</code></li>
-      <li class="list-group-item">Is auto-store enabled: <code>{{ project.autostoreEnabled ? 'True' : 'False' }}</code></li>
-      <li class="list-group-item">
-        Collaborators:
-        {% if project.collaborators is empty %}<code>Empty</code>{% else %}
-          {% for cl in project.collaborators %}{{ cl }}{% endfor %}
-        {% endif %}
-      </li>
-    </ul>
-  </div>
+  {% include 'file_info/_file_list_table.html.twig' %}
 
 {% endblock %}

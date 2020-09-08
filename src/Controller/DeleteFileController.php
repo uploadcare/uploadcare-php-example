@@ -10,7 +10,7 @@ use Uploadcare\Api;
 use Uploadcare\Exception\HttpException;
 
 /**
- * @Route(path="/delete/{uuid<.+>}", name="delete_file")
+ * @Route(path="/delete/{uuid<.+>}", name="delete_file", methods={"POST"})
  */
 class DeleteFileController extends AbstractController
 {

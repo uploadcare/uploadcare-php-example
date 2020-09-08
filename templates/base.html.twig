@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!--suppress JSUnresolvedLibraryURL -->
 <html lang="en" class="h-100">
 <head>
   <meta charset="UTF-8">
@@ -17,22 +16,48 @@
   <title>{% block title %}Welcome!{% endblock %}</title>
   {% block stylesheets %}{% endblock %}
 </head>
-<body class="d-flex h-75">
-<main class="d-flex my-auto flex-fill">
-  <div class="container w-100">
-    <h1 class="d-flex justify-content-between">{{ block('title') }} <small><a class="text-decoration-none" href="{{ path('file_list') }}">↩︎</a></small></h1>
+<body class="h-100">
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+  <a class="navbar-brand" href="https://uploadcare.com" target="_blank">Uploadcare</a>
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <aside class="col-sm-3">
+      {{ include('_menu.html.twig') }}
+    </aside>
+    <main class="col-sm-9">
+      <div class="container w-100">
+        <h1 class="d-flex justify-content-between">{{ block('title') }}
+        </h1>
 
-    {% for type,messages in app.session.flashBag.all %}
-      {% for message in messages %}
-        <div class="alert alert-{{ type }}" role="alert">
-          {{ message }}
-        </div>
-      {% endfor %}
-    {% endfor %}
+        {% for type,messages in app.session.flashBag.all %}
+          {% for message in messages %}
+            <div class="alert alert-{{ type }}" role="alert">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endfor %}
 
-    {% block body %}{% endblock %}
+        {% block body %}{% endblock %}
+      </div>
+    </main>
   </div>
-</main>
+</div>
 {% block javascripts %}{% endblock %}
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-method]').forEach(aEl => {
+      aEl.addEventListener('click', e => {
+        e.preventDefault();
+        const method = e.currentTarget.dataset.method || 'GET'
+        const form = document.createElement('form');
+        form.setAttribute('action', e.currentTarget.href);
+        form.setAttribute('method', method);
+        document.getElementsByTagName('body')[0].appendChild(form);
+        form.submit();
+      });
+    });
+  });
+</script>
 </body>
 </html>

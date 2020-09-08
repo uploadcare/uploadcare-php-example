@@ -4,9 +4,6 @@
 
 {% block body %}
 
-  {% include 'file_info/_file_list_table.html.twig' %}
-  <hr>
-
   {{ form_start(form) }}
   {{ form_rest(form) }}
 
@@ -18,13 +15,13 @@
 
   <script>
     window.addEventListener('DOMContentLoaded', () => {
-      const fileInputs = document.querySelectorAll('.custom-file-input');
+      const fileInputs = document.querySelectorAll('.custom-file-input')
       fileInputs.forEach(inp => {
         inp.addEventListener('change', evt => {
-          let labelElement = evt.currentTarget.nextSibling;
-          labelElement.innerText = evt.currentTarget.files[0].name;
+          let labelElement = evt.currentTarget.nextSibling
+          labelElement.innerText = evt.currentTarget.files[0].name
         })
       })
-    });
+    })
   </script>
 {% endblock %}
