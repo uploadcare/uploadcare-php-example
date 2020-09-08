@@ -35,14 +35,21 @@ An example project based on Symfony Framework, but the library itself can be use
 
 ## Install demo-project
 
+### You can use all this project without any installation — only with Docker.
+
+- Clone this repository;
+- run `docker build -t uploadcare-example-project -f Dockerfile .` from project root;
+- run `docker run -it --rm -p 8000:8000 uploadcare-example-project`;
+- open your browser on `http://127.0.0.1:8000/`
+
+### Default installation
+
 Requirements:
 
 - php7.4
 - ext-ctype
 - ext-iconv
 - ext-curl
-
-### Installation
 
 - Clone this repository;
 - Run `composer install` from project root;
