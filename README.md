@@ -33,16 +33,25 @@ An example project based on Symfony Framework, but the library itself can be use
     - [Convert video](#convert-video)
     - [Video conversion job status](#video-conversion-status)
 
+## Usage with Docker
+
+You can use this project as demo with Docker. For do this, clone this repository, build Docker image like
+
+```shell script
+docker build -t uploadcare-example-project -f Dockerfile .
+```
+
+then, run the image like
+
+```shell script
+docker run -it --rm -p 8000:8000 -e UPLOADCARE_PUBLIC_KEY=<your public key> -e UPLOADCARE_PRIVATE_KEY=<your provate key> uploadcare-example-project sh
+```
+
+In container shell you shold install the composer packages (`composer install`) and run simple dev-server: `php -S 0.0.0.0:8000 public/index.php`
+
+After that, you can see the web-interface of project in your browser on `http://localhost:8000`.
+
 ## Install demo-project
-
-### You can use all this project without any installation — only with Docker.
-
-- Clone this repository;
-- run `docker build -t uploadcare-example-project -f Dockerfile .` from project root;
-- run `docker run -it --rm -p 8000:8000 uploadcare-example-project`;
-- open your browser on `http://127.0.0.1:8000/`
-
-### Default installation
 
 Requirements:
 
