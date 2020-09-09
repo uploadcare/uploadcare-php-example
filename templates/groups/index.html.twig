@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Groups list{% endblock %}
+
+{% block body %}
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Total groups: {{ groups.total }}</h5>
+    </div>
+    {% if groups.results is empty %}
+      <div class="card-body">
+        <h5 class="card-title">
+          You have no groups if your project
+        </h5>
+      </div>
+    {% endif %}
+    <ul class="list-group list-group-flush">
+      {% for group in groups.results %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div class="text-place flex-grow-1 text-truncate">
+            <a href="{{ path('group_info', {'uuid': group.id}) }}">{{ group.id }}</a>
+          </div>
+          <div class="badge badge-secondary">{{ group.files | length }} files</div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

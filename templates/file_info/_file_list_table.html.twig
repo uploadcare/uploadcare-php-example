@@ -12,10 +12,17 @@
   <ul class="list-group list-group-flush">
     {% for file in list.results %}
       <li class="list-group-item d-flex justify-content-between align-items-center">
-        <a class="flex-grow-1" href="{{ path('file_info', {'uuid': file.uuid}) }}">{{ file.originalFilename }}</a>
-        <a href="{{ path('store_file', {'uuid': file.uuid}) }}" class="btn btn-secondary btn-sm">Store</a>
-        <a data-method="POST" class="btn btn-danger btn-sm"
-           href="{{ path('delete_file', {'uuid': file.uuid}) }}">Delete</a>
+        <div class="text-place flex-grow-1 text-truncate">
+          <a href="{{ path('file_info', {'uuid': file.uuid}) }}">{{ file.originalFilename }}</a>
+          <br>
+          <div class="badge badge-secondary">{{ file.uuid }}</div>
+          <div class="badge badge-secondary">{{ file.mimeType }}</div>
+        </div>
+        <div class="btn-group" role="group" aria-label="Actions">
+          <a href="{{ path('store_file', {'uuid': file.uuid}) }}" class="btn btn-secondary btn-sm">Store</a>
+          <a data-method="POST" class="btn btn-danger btn-sm"
+             href="{{ path('delete_file', {'uuid': file.uuid}) }}">Delete</a>
+        </div>
       </li>
     {% endfor %}
   </ul>
