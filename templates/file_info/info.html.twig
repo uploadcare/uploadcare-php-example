@@ -5,7 +5,13 @@
 {% block body %}
   <a href="{{ path('file_list') }}">Back to files</a>
   <hr>
-  {% include 'file_info/_common_file.html.twig' %}
+  <h4 class="d-flex justify-content-between align-items-center">
+    Remote file
+    <a href="{{ path('store_file', {'uuid': file.uuid}) }}" class="btn btn-secondary">Store</a>
+  </h4>
+  <div class="table-responsive">
+    {% include 'file_info/_common_file.html.twig' %}
+  </div>
 
   {% if file.imageInfo is not null %}
     {% include 'file_info/_image_info.html.twig' %}

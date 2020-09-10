@@ -20,7 +20,7 @@
           <div class="text-place flex-grow-1 text-truncate">
             <a href="{{ path('group_info', {'uuid': group.id}) }}">{{ group.id }}</a>
           </div>
-          <div class="badge badge-secondary">{{ group.files | length }} files</div>
+          <div class="badge badge-secondary">{{ group.filesCount }} files</div>
         </li>
       {% endfor %}
     </ul>
