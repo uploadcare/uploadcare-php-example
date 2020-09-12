@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Uploadcare\Api;
@@ -37,12 +39,8 @@ class GroupController extends AbstractController
      */
     public function info(string $uuid): Response
     {
-        $group = $this->api->group()->groupInfo($uuid);
-        $filesInfo = $this->api->uploader()->groupInfo($uuid);
-
         return $this->render('groups/info.html.twig', [
-            'group' => $group,
-            'files' => $filesInfo,
+            'group' => $this->api->group()->groupInfo($uuid),
         ]);
     }
 
@@ -58,5 +56,40 @@ class GroupController extends AbstractController
         $this->api->group()->storeGroup($uuid);
 
         return $this->redirectToRoute('group_info', ['uuid' => $uuid]);
+    }
+
+    /**
+     * @Route(path="/group-create", name="group_create")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function createGroup(Request $request): Response
+    {
+        $data = ['files' => []];
+        $form = $this->createFormBuilder($data)
+            ->add('files', ChoiceType::class, [
+                'choices' => $this->api->file()->listFiles()->getResults(),
+                'multiple' => true,
+                'expanded' => true,
+                'choice_label' => 'originalFilename',
+            ])->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $files = $form->getData()['files'] ?? [];
+
+            if (empty($files)) {
+                $this->addFlash('danger', 'You not sent any files');
+
+                return $this->redirectToRoute('group_create');
+            }
+            $group = $this->api->group()->createGroup($files);
+
+            return $this->redirectToRoute('group_info', ['uuid' => $group->getId()]);
+        }
+
+        return $this->render('groups/create_new.html.twig', ['form' => $form->createView()]);
     }
 }
