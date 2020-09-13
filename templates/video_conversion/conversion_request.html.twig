@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block title %}Video conversion request{% endblock %}
+
+{% block body %}
+  <div class="card">
+    {{ form_start(form) }}
+    <div class="card-body">
+      <div class="card-title">
+        <h4>Convert {{ file.originalFilename }}</h4>
+      </div>
+
+      {{ form_rest(form) }}
+
+      <button class="btn btn-primary" type="submit">Request conversion</button>
+    </div>
+    {{ form_end(form) }}
+  </div>
+{% endblock %}
