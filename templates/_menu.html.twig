@@ -21,4 +21,11 @@
     <a class="nav-link {{ app.request.pathInfo == path('group_create') ? 'active' : '' }}"
        href="{{ path('group_create') }}">Create group</a>
   </li>
+
+  <li class="dropdown-divider"></li>
+
+  <li class="nav-item">
+    <a class="nav-link {{ app.request.pathInfo == path('document_conversion') ? 'active' : '' }}"
+       href="{{ path('document_conversion') }}">Convert document</a>
+  </li>
 </ul>

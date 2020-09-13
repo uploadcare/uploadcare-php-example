@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block title %}Document conversion{% endblock %}
+
+{% block body %}
+  <div class="card">
+    {{ form_start(form) }}
+    <div class="card-body">
+      {{ form_rest(form) }}
+
+      <button class="btn btn-primary" type="submit">Convert</button>
+    </div>
+    {{ form_end(form) }}
+  </div>
+
+{% endblock %}
