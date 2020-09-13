@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block title %}Update webhook {{ item.id }}{% endblock %}
+
+{% block body %}
+  <div class="card">
+    {{ form_start(form) }}
+    <div class="card-body">
+      {{ form_rest(form) }}
+
+      <button class="btn btn-primary" type="submit">Save</button>
+    </div>
+    {{ form_end(form) }}
+  </div>
+{% endblock %}

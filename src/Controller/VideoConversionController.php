@@ -1,8 +1,6 @@
 <?php declare(strict_types=1);
 
-
 namespace App\Controller;
-
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -27,8 +25,10 @@ class VideoConversionController extends AbstractController
 
     /**
      * @Route(path="/convert-video/{videoId<.+>?}", name="video_convert_request")
-     * @param string $videoId
+     *
+     * @param string  $videoId
      * @param Request $request
+     *
      * @return Response
      */
     public function conversionRequest(string $videoId, Request $request): Response
@@ -40,10 +40,10 @@ class VideoConversionController extends AbstractController
             ->add('horizontalSize', NumberType::class, ['required' => false])
             ->add('verticalSize', NumberType::class, ['required' => false])
             ->add('resizeMode', ChoiceType::class, [
-                'choices' => $this->getResizeModes()
+                'choices' => $this->getResizeModes(),
             ])
             ->add('quality', ChoiceType::class, [
-                'choices' => $this->getQualities()
+                'choices' => $this->getQualities(),
             ])
             ->add('targetFormat', TextType::class)
             ->add('startTime', TextType::class, ['required' => false])

@@ -32,7 +32,8 @@
     <td>
       {{ file.mimeType }}
       {% if file.mimeType starts with 'video' %}
-        <a href="{{ path('video_convert_request', {'videoId': file.uuid}) }}" class="btn btn-sm btn-secondary">Request video conversion</a>
+        <a href="{{ path('video_convert_request', {'videoId': file.uuid}) }}" class="btn btn-sm btn-secondary">Request
+          video conversion</a>
       {% endif %}
     </td>
   </tr>

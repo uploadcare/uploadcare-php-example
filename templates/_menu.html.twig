@@ -28,4 +28,15 @@
     <a class="nav-link {{ app.request.pathInfo == path('document_conversion') ? 'active' : '' }}"
        href="{{ path('document_conversion') }}">Convert document</a>
   </li>
+
+  <li class="dropdown-divider"></li>
+
+  <li class="nav-item">
+    <a class="nav-link {{ app.request.pathInfo == path('webhooks_list') ? 'active' : '' }}"
+       href="{{ path('webhooks_list') }}">List of project webhooks</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {{ app.request.pathInfo == path('webhook_create') ? 'active' : '' }}"
+       href="{{ path('webhook_create') }}">Create new webhook</a>
+  </li>
 </ul>

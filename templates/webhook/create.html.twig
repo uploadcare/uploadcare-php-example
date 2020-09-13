@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block title %}Create webhook{% endblock %}
+
+{% block body %}
+  <div class="card">
+    {{ form_start(form) }}
+    <div class="card-body">
+      {{ form_rest(form) }}
+
+      <button class="btn btn-primary" type="submit">Create</button>
+    </div>
+    {{ form_end(form) }}
+  </div>
+{% endblock %}

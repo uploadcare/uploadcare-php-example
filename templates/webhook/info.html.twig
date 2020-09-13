@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% block title %}Webhook {{ webhook.id }} info{% endblock %}
+
+{% block body %}
+  <div class="card">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <strong>ID</strong>: {{ webhook.id }}
+      </li>
+      <li class="list-group-item">
+        <strong>Created at</strong>: {{ webhook.created | date }}
+      </li>
+      <li class="list-group-item">
+        <strong>Updated at</strong>: {{ webhook.updated is not null ? webhook.updated | date : '--' }}
+      </li>
+      <li class="list-group-item">
+        <strong>Event</strong>: {{ webhook.event }}
+      </li>
+      <li class="list-group-item">
+        <strong>Target Url</strong>: {{ webhook.targetUrl }}
+      </li>
+      <li class="list-group-item">
+        <strong>Project</strong>: {{ webhook.project }}
+      </li>
+      <li class="list-group-item">
+        {% if webhook.isActive %}
+          <div class="badge badge-info">Active</div>
+        {% else %}
+          <div class="badge badge-secondary">Not active</div>
+        {% endif %}
+      </li>
+    </ul>
+  </div>
+{% endblock %}
