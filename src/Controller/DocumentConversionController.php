@@ -57,15 +57,28 @@ class DocumentConversionController extends AbstractController
             }
             $result = $this->api->conversion()->convertDocument($file, $form->getData());
             if ($result instanceof ConvertedItemInterface) {
-                return $this->render('document_conversion/conversion_result.html.twig', [
-                    'result' => $result,
-                ]);
+                return $this->redirectToRoute('document_conversion_result', ['token' => $result->getToken()]);
             }
 
             return $this->render('document_conversion/conversion_problem.html.twig', ['result' => $result]);
         }
 
         return $this->render('document_conversion/index.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Route(path="/convert-document/result/{token<\d+>}", name="document_conversion_result")
+     *
+     * @param int $token
+     * @return Response
+     */
+    public function conversionResult(int $token): Response
+    {
+        $result = $this->api->conversion()->documentJobStatus($token);
+
+        return $this->render('document_conversion/conversion_result.html.twig', [
+            'result' => $result,
+        ]);
     }
 
     private function formatChoices(): array
