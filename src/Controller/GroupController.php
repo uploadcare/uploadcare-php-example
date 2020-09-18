@@ -26,7 +26,7 @@ class GroupController extends AbstractController
     public function index(): Response
     {
         return $this->render('groups/index.html.twig', [
-            'groups' => $this->api->group()->listGroups(),
+            'groups' => $this->api->group()->listGroups(100),
         ]);
     }
 

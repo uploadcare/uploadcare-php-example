@@ -40,7 +40,7 @@ class WebhooksController extends AbstractController
         $all = $this->api->webhook()->listWebhooks();
         $items = $all->filter(fn (WebhookInterface $webhook) => $webhook->getId() === $id);
         if (!$items->isEmpty()) {
-            return $items->first();
+            return $items->first() ?: null;
         }
 
         return null;

@@ -3,8 +3,25 @@
 
 {% block body %}
   <div class="card">
-    <div class="card-body">
-      {# TODO #}
-    </div>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <strong>Status:</strong> {{ result.status }}
+      </li>
+      <li class="list-group-item">
+        <strong>Error:</strong> {{ result.error is null ? '--' : result.error }}
+      </li>
+      <li class="list-group-item">
+        <strong>Result uuid:</strong>
+        {% if result.result.uuid %}
+          <a href="{{ path('file_info', {'uuid': result.result.uuid}) }}">{{ result.result.uuid }}</a>
+        {% else %}
+          --
+        {% endif %}
+      </li>
+      <li class="list-group-item">
+        <strong>Result thumbnails group
+          uuid:</strong> {{ result.result.thumbnailsGroupUuid is null ? '--' : result.result.thumbnailsGroupUuid }}
+      </li>
+    </ul>
   </div>
 {% endblock %}

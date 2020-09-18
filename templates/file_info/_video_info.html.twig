@@ -1,13 +1,9 @@
-<h4>Video info</h4>
+<h4>Video / audio info</h4>
 <div class="table-responsive">
   <table class="table table-condensed table-bordered table-hover mt-2">
     <tr>
       <th>Duration</th>
       <td>{{ file.videoInfo.duration }}</td>
-    </tr>
-    <tr>
-      <th></th>
-      <td></td>
     </tr>
     <tr>
       <th>Format</th>
@@ -19,15 +15,34 @@
     </tr>
     <tr>
       <th>Dimensions</th>
-      <td>{{ file.videoInfo.width }}×{{ file.videoInfo.height }}</td>
+      <td>{{ file.videoInfo.video.width }}×{{ file.videoInfo.video.height }}</td>
     </tr>
     <tr>
       <th>Frame rate</th>
-      <td>{{ file.videoInfo.framerate }}</td>
+      <td>{{ file.videoInfo.video.framerate }}</td>
     </tr>
     <tr>
       <th>Codec</th>
-      <td>{{ file.videoInfo.codec }}</td>
+      <td>{{ file.videoInfo.video.codec }}</td>
+    </tr>
+    <tr>
+      <th colspan="2">Audio</th>
+    </tr>
+    <tr>
+      <th>Bitrate</th>
+      <td>{{ file.videoInfo.audio.bitrate | default('--') }}</td>
+    </tr>
+    <tr>
+      <th>Codec</th>
+      <td>{{ file.videoInfo.audio.codec | default('--') }}</td>
+    </tr>
+    <tr>
+      <th>Sample Rate</th>
+      <td>{{ file.videoInfo.audio.sampleRate | default('--') }}</td>
+    </tr>
+    <tr>
+      <th>Channels</th>
+      <td>{{ file.videoInfo.audio.channels | default('--') }}</td>
     </tr>
   </table>
 </div>

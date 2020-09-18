@@ -70,6 +70,7 @@ class DocumentConversionController extends AbstractController
      * @Route(path="/convert-document/result/{token<\d+>}", name="document_conversion_result")
      *
      * @param int $token
+     *
      * @return Response
      */
     public function conversionResult(int $token): Response

@@ -8,6 +8,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Uploadcare\Api;
 use Uploadcare\Exception\HttpException;
+use Uploadcare\File;
 
 /**
  * @Route(path="/delete/{uuid<.+>}", name="delete_file", methods={"POST"})
@@ -36,8 +37,12 @@ class DeleteFileController extends AbstractController
         } catch (HttpException $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
+        if (!$file instanceof File) {
+            $this->api->file()->deleteFile($file);
+        } else {
+            $file->delete();
+        }
 
-        $file->delete();
         $this->addFlash('success', 'File deleted');
 
         return $this->redirectToRoute('file_list');

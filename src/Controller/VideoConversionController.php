@@ -11,8 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Uploadcare\Api;
-use Uploadcare\Conversion\ConversionResult;
 use Uploadcare\Conversion\VideoEncodingRequest;
+use Uploadcare\Interfaces\Conversion\ConvertedItemInterface;
 
 class VideoConversionController extends AbstractController
 {
@@ -56,10 +56,8 @@ class VideoConversionController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $result = $this->api->conversion()->convertVideo($file, $form->getData());
-            if ($result instanceof ConversionResult) {
-                return $this->render('video_conversion/conversion_result.html.twig', [
-                    'result' => $result,
-                ]);
+            if ($result instanceof ConvertedItemInterface) {
+                return $this->redirectToRoute('video_conversion_result', ['token' => $result->getToken()]);
             }
 
             return $this->render('video_conversion/conversion_problem.html.twig', [
@@ -70,6 +68,22 @@ class VideoConversionController extends AbstractController
         return $this->render('video_conversion/conversion_request.html.twig', [
             'file' => $file,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route(path="/convert-video-result/{token<\d+>}", name="video_conversion_result")
+     *
+     * @param int $token
+     *
+     * @return Response
+     */
+    public function conversionResult(int $token): Response
+    {
+        $result = $this->api->conversion()->videoJobStatus($token);
+
+        return $this->render('video_conversion/conversion_result.html.twig', [
+            'result' => $result,
         ]);
     }
 

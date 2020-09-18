@@ -8,6 +8,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Uploadcare\Api;
 use Uploadcare\Exception\HttpException;
+use Uploadcare\File;
 
 /**
  * @Route(path="/store/{uuid<.+>}", name="store_file")
@@ -37,8 +38,12 @@ class StoreFileController extends AbstractController
         } catch (HttpException $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
+        if (!$file instanceof File) {
+            $this->api->file()->storeFile($file);
+        } else {
+            $file->store();
+        }
 
-        $file->store();
         $this->addFlash('success', \sprintf('File stored'));
 
         return $this->redirectToRoute('file_info', ['uuid' => $file->getUuid()]);
