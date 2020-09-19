@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Uploadcare\Api;
 
 /**
- * @Route(path="/project-info", name="project_info")
+ * @Route(path="/", name="project_info")
  */
 class ProjectInfoController extends AbstractController
 {

@@ -18,7 +18,7 @@ class FileInfoController extends AbstractController
     }
 
     /**
-     * @Route(path="/", name="file_list")
+     * @Route(path="/file-list", name="file_list")
      *
      * @param Request $request
      *
