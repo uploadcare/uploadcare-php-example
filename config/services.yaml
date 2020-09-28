@@ -4,8 +4,10 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    uploadcare_public_key: '%env(UPLOADCARE_PUBLIC_KEY)%'
+    uploadcare_public_key:  '%env(UPLOADCARE_PUBLIC_KEY)%'
     uploadcare_private_key: '%env(UPLOADCARE_PRIVATE_KEY)%'
+    auth_url_secret_key:    '%env(AUTH_URL_SECRET_KEY)%'
+    auth_url_cdn_host:      '%env(AUTH_URL_CDN_HOST)%'
 
 services:
     # default configuration for services in *this* file
@@ -28,6 +30,16 @@ services:
     App\Controller\:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
+
+    Uploadcare\AuthUrl\Token\TokenInterface:
+        class: Uploadcare\AuthUrl\Token\AkamaiToken
+        arguments:
+            - '%auth_url_secret_key%'
+
+    Uploadcare\AuthUrl\AuthUrlConfig:
+        arguments:
+            - '%auth_url_cdn_host%'
+            - '@Uploadcare\AuthUrl\Token\TokenInterface'
 
     Uploadcare\Interfaces\ConfigurationInterface:
         class: Uploadcare\Configuration

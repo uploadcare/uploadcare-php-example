@@ -27,7 +27,9 @@ TEXT;
 
     protected function configure(): void
     {
-        $this->setHelp(self::$help);
+        $this
+            ->setDescription('Command for retrieve project info from Uploadcare API')
+            ->setHelp(self::$help);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

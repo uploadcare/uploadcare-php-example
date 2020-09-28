@@ -32,6 +32,7 @@ TEXT;
     protected function configure(): void
     {
         $this->setHelp(self::$help)
+            ->setDescription('Command for retrieve file info from Uploadcare API')
             ->addArgument('uuid', InputArgument::OPTIONAL, 'File uuid to retrieve', null);
     }
 
