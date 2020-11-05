@@ -206,6 +206,8 @@ If you have files in your project, you can see them in the `/file-list` director
 
 This option makes sense when you upload a file with the `store` field option set to `0`. Anyway, you can call the `store` method on any file. See examples in `StoreFileController`.
 
+Please, remember that your files **will be deleted** after 24 hours in case you not store them and your project has not "Auto store" option.
+
 ## Delete file
 
 You can delete any file from the `file-info` screen. Find examples in `DeleteFileController`.
