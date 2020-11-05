@@ -72,7 +72,7 @@ First steps:
 
 ## Container initialization
 
-### Symfony-container example:
+### Symfony-container example
 
 ```yaml
 parameters:
