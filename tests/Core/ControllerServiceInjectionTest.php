@@ -38,8 +38,6 @@ class ControllerServiceInjectionTest extends KernelTestCase
     /**
      * @dataProvider provideControllerClasses
      *
-     * @param string $controllerClass
-     *
      * @throws \ReflectionException
      */
     public function testAnyController(string $controllerClass): void

@@ -24,13 +24,7 @@ class DocumentConversionController extends AbstractController
         $this->api = $api;
     }
 
-    /**
-     * @Route(path="/convert-document", name="document_conversion")
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
+    #[Route(path: '/convert-document', name: 'document_conversion')]
     public function convertDocument(Request $request): Response
     {
         $convRequest = new DocumentConversionRequest();
@@ -66,13 +60,7 @@ class DocumentConversionController extends AbstractController
         return $this->render('document_conversion/index.html.twig', ['form' => $form->createView()]);
     }
 
-    /**
-     * @Route(path="/convert-document/result/{token<\d+>}", name="document_conversion_result")
-     *
-     * @param int $token
-     *
-     * @return Response
-     */
+    #[Route(path: '/convert-document/result/{token<\d+>}', name: 'document_conversion_result')]
     public function conversionResult(int $token): Response
     {
         $result = $this->api->conversion()->documentJobStatus($token);

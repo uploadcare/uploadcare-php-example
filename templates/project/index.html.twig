@@ -16,7 +16,7 @@
       <li class="list-group-item">
         Collaborators:
         {% if project.collaborators is empty %}<code>Empty</code>{% else %}
-          {% for cl in project.collaborators %}{{ cl }}{% endfor %}
+          {% for cl in project.collaborators %}{{ cl.name | default('') }}{% endfor %}
         {% endif %}
       </li>
     </ul>

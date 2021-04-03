@@ -9,9 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Uploadcare\Api;
 
-/**
- * @Route(path="/batch-delete", name="batch_delete_file")
- */
+#[Route(path: '/batch-delete', name: 'batch_delete_file')]
 class BatchDeleteController extends AbstractController
 {
     private Api $api;

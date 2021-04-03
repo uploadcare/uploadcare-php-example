@@ -19,8 +19,6 @@ class CommandServiceInjectionTest extends KernelTestCase
     /**
      * @dataProvider provideCommandClasses
      *
-     * @param string $commandClass
-     *
      * @throws \ReflectionException
      */
     public function testAnyCommand(string $commandClass): void

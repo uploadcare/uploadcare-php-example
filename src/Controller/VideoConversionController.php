@@ -23,14 +23,7 @@ class VideoConversionController extends AbstractController
         $this->api = $api;
     }
 
-    /**
-     * @Route(path="/convert-video/{videoId<.+>?}", name="video_convert_request")
-     *
-     * @param string  $videoId
-     * @param Request $request
-     *
-     * @return Response
-     */
+    #[Route(path: '/convert-video/{videoId<.+>?}', name: 'video_convert_request')]
     public function conversionRequest(string $videoId, Request $request): Response
     {
         $conversionRequest = new VideoEncodingRequest();
@@ -71,13 +64,7 @@ class VideoConversionController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/convert-video-result/{token<\d+>}", name="video_conversion_result")
-     *
-     * @param int $token
-     *
-     * @return Response
-     */
+    #[Route(path: "/convert-video-result/{token<\d+>}", name: 'video_conversion_result')]
     public function conversionResult(int $token): Response
     {
         $result = $this->api->conversion()->videoJobStatus($token);

@@ -44,7 +44,7 @@ docker build -t uploadcare-example-project -f Dockerfile .
 2. Run the image:
 
 ```shell script
-docker run -it --rm -p 8000:8000 -e UPLOADCARE_PUBLIC_KEY=<your public key> -e UPLOADCARE_PRIVATE_KEY=<your provate key> uploadcare-example-project sh
+docker run -it --rm -p 8000:8000 -e UPLOADCARE_PUBLIC_KEY=<your public key> -e UPLOADCARE_SECRET_KEY=<your secret key> uploadcare-example-project sh
 ```
 
 3. Install composer packages (`composer install`) in the container shell and run a simple dev-server:
@@ -77,13 +77,13 @@ First steps:
 ```yaml
 parameters:
     uploadcare_public_key: '%env(UPLOADCARE_PUBLIC_KEY)%'
-    uploadcare_private_key: '%env(UPLOADCARE_PRIVATE_KEY)%'
+    uploadcare_secret_key: '%env(UPLOADCARE_SECRET_KEY)%'
 
 services:
     Uploadcare\Interfaces\ConfigurationInterface:
         class: Uploadcare\Configuration
         factory: ['Uploadcare\Configuration', 'create']
-        arguments: ['%uploadcare_public_key%', '%uploadcare_private_key%']
+        arguments: ['%uploadcare_public_key%', '%uploadcare_secret_key%']
 
     uploadcare.configuration:
         alias: 'Uploadcare\Interfaces\ConfigurationInterface'
@@ -101,7 +101,7 @@ See working example in [`config/services.yaml`](config/services.yaml)
 // config/uploadcare.php
 return [
     'uploadcare_public_key' => env('UPLOADCARE_PUBLIC_KEY'),
-    'uploadcare_private_key' => env('UPLOADCARE_PRIVATE_KEY'),
+    'UPLOADCARE_SECRET_KEY' => env('UPLOADCARE_SECRET_KEY'),
 ];
 ```
 
@@ -120,7 +120,7 @@ class UploadcareProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(ConfigurationInterface::class, function () {
-            return Configuration::create(config('uploadcare.public_key'), config('uploadcare.private_key'));
+            return Configuration::create(config('uploadcare.public_key'), config('uploadcare.secret_key'));
         });
 
         $this->app->bind(Api::class, function (Application $app) {
@@ -132,27 +132,27 @@ class UploadcareProvider extends ServiceProvider
 
 ## Direct initialization
 
-Define variables or constants with Uploadcare public and private keys:
+Define variables or constants with Uploadcare public and secret keys:
 
 ```php
 (new \Symfony\Component\Dotenv\Dotenv())->bootEnv(__DIR__ . '/.env');
 
 // Or something like that
 defined('UPLOADCARE_PUBLIC_KEY') or define('UPLOADCARE_PUBLIC_KEY', '<Your public key>');
-defined('UPLOADCARE_PRIVATE_KEY') or define('UPLOADCARE_PRIVATE_KEY', '<Your private key>');
+defined('UPLOADCARE_SECRET_KEY') or define('UPLOADCARE_SECRET_KEY', '<Your secret key>');
 ```
 
 Make a configuration object and API instance:
 
 ```php
-$configuration = \Uploadcare\Configuration::create($_ENV['UPLOADCARE_PUBLIC_KEY'], $_ENV['UPLOADCARE_PRIVATE_KEY']);
+$configuration = \Uploadcare\Configuration::create($_ENV['UPLOADCARE_PUBLIC_KEY'], $_ENV['UPLOADCARE_SECRET_KEY']);
 $api = new \Uploadcare\Api($configuration);
 ```
 
 Or make an API instance with factory:
 
 ```php
-$api = \Uploadcare\Api::create($_ENV['UPLOADCARE_PUBLIC_KEY'], $_ENV['UPLOADCARE_PRIVATE_KEY']);
+$api = \Uploadcare\Api::create($_ENV['UPLOADCARE_PUBLIC_KEY'], $_ENV['UPLOADCARE_SECRET_KEY']);
 ```
 
 ## Common information
@@ -243,7 +243,7 @@ In this library, you don’t need to create the conversion URLs manually, and ju
 To convert a document from one format to another, create `Uploadcare\Conversion\DocumentConversionRequest` and set it as a target data. For example:
 
 ```php
-$configuration = \Uploadcare\Configuration::create($_ENV['UPLOADCARE_PUBLIC_KEY'], $_ENV['UPLOADCARE_PRIVATE_KEY']);
+$configuration = \Uploadcare\Configuration::create($_ENV['UPLOADCARE_PUBLIC_KEY'], $_ENV['UPLOADCARE_SECRET_KEY']);
 $api = new \Uploadcare\Api($configuration);
 $dcr = (new Uploadcare\Conversion\DocumentConversionRequest())
     ->setTargetFormat('png')
@@ -280,7 +280,7 @@ To create a video conversion request, make the `Uploadcare\Conversion\VideoEncod
 For example, you can request converting a video file to the WebM format, resize it to 720px in width, while preserving the aspect ratio, compress the file and store it:
 
 ```php
-$configuration = \Uploadcare\Configuration::create($_ENV['UPLOADCARE_PUBLIC_KEY'], $_ENV['UPLOADCARE_PRIVATE_KEY']);
+$configuration = \Uploadcare\Configuration::create($_ENV['UPLOADCARE_PUBLIC_KEY'], $_ENV['UPLOADCARE_SECRET_KEY']);
 $api = new \Uploadcare\Api($configuration);
 $ver = (new \Uploadcare\Conversion\VideoEncodingRequest())
     ->setTargetFormat('webm')

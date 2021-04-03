@@ -50,9 +50,7 @@ TEXT;
     private ParameterBagInterface $parameterBag;
 
     /**
-     * @param Api                   $api          Pre-configured main Uploadcare API instance
-     * @param ParameterBagInterface $parameterBag
-     * @param string|null           $name
+     * @param Api $api Pre-configured main Uploadcare API instance
      */
     public function __construct(Api $api, ParameterBagInterface $parameterBag, string $name = null)
     {
@@ -74,12 +72,6 @@ TEXT;
         ;
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->validateInput($input);
@@ -102,10 +94,6 @@ TEXT;
 
     /**
      * Upload file from resource.
-     *
-     * @param string          $path
-     * @param InputInterface  $input
-     * @param OutputInterface $output
      */
     protected function asResource(string $path, InputInterface $input, OutputInterface $output): void
     {
@@ -131,10 +119,6 @@ TEXT;
 
     /**
      * Upload file from path.
-     *
-     * @param string          $path
-     * @param InputInterface  $input
-     * @param OutputInterface $output
      */
     protected function asPath(string $path, InputInterface $input, OutputInterface $output): void
     {
@@ -153,10 +137,6 @@ TEXT;
 
     /**
      * Upload file from remote URL.
-     *
-     * @param string          $path
-     * @param InputInterface  $input
-     * @param OutputInterface $output
      */
     protected function asUrl(string $path, InputInterface $input, OutputInterface $output): void
     {
@@ -175,8 +155,6 @@ TEXT;
 
     /**
      * Validate user input.
-     *
-     * @param InputInterface $input
      */
     protected function validateInput(InputInterface $input): void
     {

@@ -11,9 +11,6 @@ trait RenderFileInfoTrait
 {
     /**
      * Show File info.
-     *
-     * @param FileInfoInterface $fileInfo
-     * @param SymfonyStyle      $io
      */
     protected function renderFileInfo(FileInfoInterface $fileInfo, SymfonyStyle $io): void
     {
@@ -44,9 +41,6 @@ trait RenderFileInfoTrait
 
     /**
      * Show Image info.
-     *
-     * @param ImageInfoInterface $imageInfo
-     * @param SymfonyStyle       $io
      */
     protected function renderImageInfo(ImageInfoInterface $imageInfo, SymfonyStyle $io): void
     {
@@ -72,9 +66,6 @@ trait RenderFileInfoTrait
 
     /**
      * Show Video info.
-     *
-     * @param VideoInfoInterface $videoInfo
-     * @param SymfonyStyle       $io
      */
     protected function renderVideoInfo(VideoInfoInterface $videoInfo, SymfonyStyle $io): void
     {

@@ -5,7 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     uploadcare_public_key:  '%env(UPLOADCARE_PUBLIC_KEY)%'
-    uploadcare_private_key: '%env(UPLOADCARE_PRIVATE_KEY)%'
+    uploadcare_secret_key: '%env(UPLOADCARE_SECRET_KEY)%'
     auth_url_secret_key:    '%env(AUTH_URL_SECRET_KEY)%'
     auth_url_cdn_host:      '%env(AUTH_URL_CDN_HOST)%'
 
@@ -44,7 +44,7 @@ services:
     Uploadcare\Interfaces\ConfigurationInterface:
         class: Uploadcare\Configuration
         factory: ['Uploadcare\Configuration', 'create']
-        arguments: ['%uploadcare_public_key%', '%uploadcare_private_key%']
+        arguments: ['%uploadcare_public_key%', '%uploadcare_secret_key%']
 
     uploadcare.configuration:
         alias: 'Uploadcare\Interfaces\ConfigurationInterface'

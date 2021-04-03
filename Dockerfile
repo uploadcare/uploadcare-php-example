@@ -1,5 +1,5 @@
 FROM composer:latest as composer
-FROM php:7.4.10-fpm-alpine
+FROM php:7.4-fpm-alpine
 
 COPY . /var/www/app
 WORKDIR /var/www/app

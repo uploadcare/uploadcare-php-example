@@ -18,11 +18,7 @@ class GroupController extends AbstractController
         $this->api = $api;
     }
 
-    /**
-     * @Route(path="/groups", name="groups_list")
-     *
-     * @return Response
-     */
+    #[Route(path: '/groups', name: 'groups_list')]
     public function index(): Response
     {
         return $this->render('groups/index.html.twig', [
@@ -30,13 +26,7 @@ class GroupController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/group-info/{uuid<.+>?}", name="group_info")
-     *
-     * @param string $uuid
-     *
-     * @return Response
-     */
+    #[Route(path: '/group-info/{uuid<.+>?}', name: 'group_info')]
     public function info(string $uuid): Response
     {
         return $this->render('groups/info.html.twig', [
@@ -44,13 +34,7 @@ class GroupController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/group-store/{uuid<.+>?}", name="group_store")
-     *
-     * @param string $uuid
-     *
-     * @return Response
-     */
+    #[Route(path: '/group-store/{uuid<.+>?}', name: 'group_store')]
     public function storeGroup(string $uuid): Response
     {
         $this->api->group()->storeGroup($uuid);
@@ -58,13 +42,7 @@ class GroupController extends AbstractController
         return $this->redirectToRoute('group_info', ['uuid' => $uuid]);
     }
 
-    /**
-     * @Route(path="/group-create", name="group_create")
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
+    #[Route(path: '/group-create', name: 'group_create')]
     public function createGroup(Request $request): Response
     {
         $data = ['files' => []];

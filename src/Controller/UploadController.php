@@ -11,9 +11,7 @@ use Symfony\Component\Validator\Constraints\File;
 use Uploadcare\Api;
 use Uploadcare\Interfaces\Response\ListResponseInterface;
 
-/**
- * @Route(path="/upload", name="upload_file")
- */
+#[Route(path: '/upload', name: 'upload_file')]
 class UploadController extends AbstractController
 {
     private Api $api;
@@ -55,7 +53,7 @@ class UploadController extends AbstractController
             }
             $fileName = $form->get('filename')->getData();
             if ($fileName === null) {
-                $fileName = \pathinfo($file->getClientOriginalName(), \PATHINFO_FILENAME).'.'.$file->guessClientExtension();
+                $fileName = \pathinfo($file->getClientOriginalName(), \PATHINFO_FILENAME) . '.' . $file->guessClientExtension();
             }
 
             try {

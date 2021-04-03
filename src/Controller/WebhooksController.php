@@ -23,11 +23,7 @@ class WebhooksController extends AbstractController
         $this->api = $api;
     }
 
-    /**
-     * @Route(path="/webhooks", name="webhooks_list")
-     *
-     * @return Response
-     */
+    #[Route(path: '/webhooks', name: 'webhooks_list')]
     public function index(): Response
     {
         return $this->render('webhook/index.html.twig', [
@@ -46,13 +42,7 @@ class WebhooksController extends AbstractController
         return null;
     }
 
-    /**
-     * @Route(path="/webhook-create", name="webhook_create")
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
+    #[Route(path: '/webhook-create', name: 'webhook_create')]
     public function createWebhook(Request $request): Response
     {
         $data = [
@@ -83,13 +73,7 @@ class WebhooksController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/webhook-info/{id<\d+>}", name="webhooks_info")
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
+    #[Route(path: "/webhook-info/{id<\d+>}", name: 'webhooks_info')]
     public function webhookInfo(int $id): Response
     {
         $item = $this->getWebhookById($id);
@@ -102,14 +86,7 @@ class WebhooksController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/webhook-update/{id<\d+>}", name="webhook_update")
-     *
-     * @param int     $id
-     * @param Request $request
-     *
-     * @return Response
-     */
+    #[Route(path: "/webhook-update/{id<\d+>}", name: 'webhook_update')]
     public function updateWebhook(int $id, Request $request): Response
     {
         $item = $this->getWebhookById($id);
@@ -143,13 +120,7 @@ class WebhooksController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/delete-webhook/{id<\d+>}", name="delete_webhook", methods={"POST"})
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
+    #[Route(path: "/delete-webhook/{id<\d+>}", name: 'delete_webhook', methods: ['POST'])]
     public function deleteWebhook(int $id): Response
     {
         $element = $this->getWebhookById($id);

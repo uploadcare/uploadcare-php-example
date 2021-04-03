@@ -10,9 +10,7 @@ use Uploadcare\Api;
 use Uploadcare\Exception\HttpException;
 use Uploadcare\File;
 
-/**
- * @Route(path="/delete/{uuid<.+>}", name="delete_file", methods={"POST"})
- */
+#[Route(path: '/delete/{uuid<.+>}', name: 'delete_file', methods: ['POST'])]
 class DeleteFileController extends AbstractController
 {
     private Api $api;
@@ -24,8 +22,6 @@ class DeleteFileController extends AbstractController
 
     /**
      * @param string $uuid file ID
-     *
-     * @return Response
      */
     public function __invoke(string $uuid): Response
     {

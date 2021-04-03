@@ -17,13 +17,7 @@ class FileInfoController extends AbstractController
         $this->api = $api;
     }
 
-    /**
-     * @Route(path="/file-list", name="file_list")
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
+    #[Route(path: '/file-list', name: 'file_list')]
     public function list(Request $request): Response
     {
         $parameters = [
@@ -38,13 +32,7 @@ class FileInfoController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/file-info/{uuid<.+>?}", name="file_info")
-     *
-     * @param string $uuid
-     *
-     * @return Response
-     */
+    #[Route(path: '/file-info/{uuid<.+>?}', name: 'file_info')]
     public function show(string $uuid): Response
     {
         if (!\uuid_is_valid($uuid)) {

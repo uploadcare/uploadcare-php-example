@@ -9,9 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Uploadcare\Api;
 
-/**
- * @Route(path="/batch-store", name="batch_store_file")
- */
+#[Route(path: '/batch-store', name: 'batch_store_file')]
 class BatchStoreController extends AbstractController
 {
     private Api $api;
