@@ -18,7 +18,7 @@
         "symfony/yaml": "5.2.*",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^3.3",
-        "uploadcare/uploadcare-php": "dev-feature/update-language-version#b9b4ac9c75c31f2cd9a0f64b54f98fa803510d1c"
+        "uploadcare/uploadcare-php": "dev-feature/update-language-version#841e009"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
