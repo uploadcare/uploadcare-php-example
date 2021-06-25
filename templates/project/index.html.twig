@@ -14,10 +14,14 @@
       <li class="list-group-item">Is auto-store enabled: <code>{{ project.autostoreEnabled ? 'True' : 'False' }}</code>
       </li>
       <li class="list-group-item">
-        Collaborators:
-        {% if project.collaborators is empty %}<code>Empty</code>{% else %}
-          {% for cl in project.collaborators %}{{ cl.name | default('') }}{% endfor %}
-        {% endif %}
+        <div class="d-flex">
+          <div class="flex-shrink-0 mr-2">Collaborators:</div>
+          <div class="flex-grow-1">
+            {% if project.collaborators is empty %}<code>Empty</code>{% else %}
+              {% for cl in project.collaborators %}{{ cl.name | default('') }}<br>{% endfor %}
+            {% endif %}
+          </div>
+        </div>
       </li>
     </ul>
   </div>
