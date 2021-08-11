@@ -7,27 +7,27 @@
         "php": ">=8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "symfony/console": "5.2.*",
-        "symfony/dotenv": "5.2.*",
+        "symfony/console": "5.3.*",
+        "symfony/dotenv": "5.3.*",
         "symfony/flex": "^1.3.1",
-        "symfony/form": "5.2.*",
-        "symfony/framework-bundle": "5.2.*",
-        "symfony/mime": "5.2.*",
+        "symfony/form": "5.3.*",
+        "symfony/framework-bundle": "5.3.*",
+        "symfony/mime": "5.3.*",
         "symfony/twig-bundle": "*",
-        "symfony/validator": "5.2.*",
-        "symfony/yaml": "5.2.*",
+        "symfony/validator": "5.3.*",
+        "symfony/yaml": "5.3.*",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^3.3",
-        "uploadcare/uploadcare-php": "dev-feature/update-language-version#841e009"
+        "uploadcare/uploadcare-php": "^3.1"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
-        "symfony/debug-bundle": "^5.2",
+        "symfony/debug-bundle": "^5.3",
         "symfony/monolog-bundle": "^3.7",
-        "symfony/phpunit-bridge": "^5.2",
-        "symfony/stopwatch": "^5.2",
-        "symfony/var-dumper": "^5.2",
-        "symfony/web-profiler-bundle": "^5.2"
+        "symfony/phpunit-bridge": "^5.3",
+        "symfony/stopwatch": "^5.3",
+        "symfony/var-dumper": "^5.3",
+        "symfony/web-profiler-bundle": "^5.3"
     },
     "config": {
         "optimize-autoloader": true,
@@ -73,7 +73,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "5.2.*"
+            "require": "5.3.*"
         }
     }
 }
