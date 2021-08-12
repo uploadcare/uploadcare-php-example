@@ -3,6 +3,13 @@
 <div class="table-responsive">
   <table class="table table-condensed table-bordered table-hover mt-2">
     <tr>
+      <td rowspan="0" class="w-50">
+        <a href="{{ file.originalFileUrl }}" target="_blank">
+          <img class="img-fluid" src="https://ucarecdn.com/{{ file.uuid }}/-/format/auto/-/quality/smart/-/preview/800x800/" alt="{{ file.originalFilename }}">
+        </a>
+      </td>
+    </tr>
+    <tr>
       <th>Color Mode</th>
       <td>{{ file.imageInfo.colorMode }}</td>
     </tr>

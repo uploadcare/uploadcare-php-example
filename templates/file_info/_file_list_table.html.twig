@@ -12,6 +12,19 @@
   <ul class="list-group list-group-flush">
     {% for file in list.results %}
       <li class="list-group-item d-flex justify-content-between align-items-center">
+        {% if file.imageInfo is not null %}
+          <a href="{{ file.originalFileUrl }}" target="_blank" class="img-thumbnail mr-2">
+            <div
+                style="width: 150px; height: 150px; background-image: url('https://ucarecdn.com/{{ file.uuid }}/-/format/auto/-/quality/smart/-/preview/160x160/'); background-position: 50% 50%; background-size: cover"></div>
+          </a>
+        {% else %}
+          <svg class="mr-2 img-thumbnail" style="text-anchor: middle" width="160" height="160"
+               xmlns="http://www.w3.org/2000/svg"
+               role="img" focusable="false">
+            <rect width="100%" height="100%" fill="#868e96"></rect>
+            <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Not an image</text>
+          </svg>
+        {% endif %}
         <div class="text-place flex-grow-1 text-truncate">
           <a href="{{ path('file_info', {'uuid': file.uuid}) }}">{{ file.originalFilename }}</a>
           <br>

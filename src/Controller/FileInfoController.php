@@ -21,8 +21,8 @@ class FileInfoController extends AbstractController
     public function list(Request $request): Response
     {
         $parameters = [
-            'limit' => $request->get('limit', 100),
-            'orderBy' => $request->get('orderBy', 'datetime_uploaded'),
+            'limit' => $request->query->getInt('limit', 100),
+            'orderBy' => $request->get('orderBy', '-datetime_uploaded'),
             'from' => $request->get('from', null),
         ];
 

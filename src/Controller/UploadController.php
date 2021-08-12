@@ -64,7 +64,7 @@ class UploadController extends AbstractController
 
             $this->addFlash('success', \sprintf('File uploaded successfully and gets a %s uuid', $fileInfo->getUuid()));
 
-            return $this->redirectToRoute('file_list');
+            return $this->redirectToRoute('file_info', ['uuid' => $fileInfo->getUuid()]);
         }
 
         return $this->render('upload/index.html.twig', [

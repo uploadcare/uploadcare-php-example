@@ -10,6 +10,10 @@
     <a class="nav-link {{ app.request.pathInfo == path('upload_file') ? 'active' : '' }}"
        href="{{ path('upload_file') }}">Upload file</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link {{ app.request.pathInfo == path('upload_from_url') ? 'active' : '' }}"
+       href="{{ path('upload_from_url') }}">Upload file from URL</a>
+  </li>
 
   <li class="dropdown-divider"></li>
 
