@@ -22,7 +22,7 @@ class GroupController extends AbstractController
     public function index(): Response
     {
         return $this->render('groups/index.html.twig', [
-            'groups' => $this->api->group()->listGroups(100),
+            'groups' => $this->api->group()->listGroups(100, false),
         ]);
     }
 
@@ -48,7 +48,7 @@ class GroupController extends AbstractController
         $data = ['files' => []];
         $form = $this->createFormBuilder($data)
             ->add('files', ChoiceType::class, [
-                'choices' => $this->api->file()->listFiles()->getResults(),
+                'choices' => $this->api->file()->listFiles(orderBy: '-datetime_uploaded')->getResults(),
                 'multiple' => true,
                 'expanded' => true,
                 'choice_label' => 'originalFilename',

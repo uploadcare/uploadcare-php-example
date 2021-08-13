@@ -16,8 +16,8 @@
   <title>{% block title %}Welcome!{% endblock %}</title>
   {% block stylesheets %}{% endblock %}
 </head>
-<body class="h-100">
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+<body class="align-items-end d-flex flex-column h-100">
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4 w-100">
   <a class="navbar-brand" href="https://uploadcare.com" target="_blank">Uploadcare</a>
 </nav>
 <div class="container-fluid">
@@ -41,6 +41,15 @@
         {% block body %}{% endblock %}
       </div>
     </main>
+  </div>
+</div>
+<div class="container-fluid mt-auto">
+  <div class="row border-top mt-4">
+    <div class="col-12">
+      <footer class="footer m-3 text-right">
+        © Uploadcare {{ 'now' | date('Y') }}
+      </footer>
+    </div>
   </div>
 </div>
 {% block javascripts %}{% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}<span class="text-truncate">File {{ file.originalFilename }} info</span>{% endblock %}
+{% block title %}File {{ file.originalFilename | u.truncate(25, '…') }} info{% endblock %}
 
 {% block body %}
   <a href="{{ path('file_list') }}">Back to files</a>
