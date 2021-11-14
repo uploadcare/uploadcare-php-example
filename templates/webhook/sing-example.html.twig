@@ -1,0 +1,19 @@
+<hr>
+<h4>Signature verification example</h4>
+{% apply spaceless %}
+<pre>
+<code class="language-php">/**
+ * Your server will receive request from Uploadcare
+ * Supposed that tour server already transformed raw http request to some object that implements your own RequestInterface
+ */
+function isSignValid(RequestInterface $request): bool
+{
+  $sign = $request->getHeader('X-Uc-Signature'); // X-Uc-Signature header content. Something like 'v1=f4d859ed2fe47b9a4fcc81693d34e58ad12366a841e58a7072c1530483689cc0'
+  $callbackBody = $request->getBody();           // Full webhook callback body. See https://uploadcare.com/api-refs/rest-api/v0.6.0/#tag/Webhook
+  $calculatedSign = 'v1=' . \hash_hmac('sha256', $callbackBody, '{{ webhook.signingSecret }}', false);
+
+  return $sign === $calculatedSign;
+}
+</code>
+</pre>
+{% endapply %}

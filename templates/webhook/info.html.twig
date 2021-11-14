@@ -20,6 +20,12 @@
         <strong>Target Url</strong>: {{ webhook.targetUrl }}
       </li>
       <li class="list-group-item">
+        <strong>Signing Secret</strong>: {{ webhook.signingSecret }}
+        {% if webhook.signingSecret is not null %}
+          {% include 'webhook/sing-example.html.twig' %}
+        {% endif %}
+      </li>
+      <li class="list-group-item">
         <strong>Project</strong>: {{ webhook.project }}
       </li>
       <li class="list-group-item">
@@ -30,5 +36,8 @@
         {% endif %}
       </li>
     </ul>
+    <div class="card-body">
+      <a href="{{ path('webhook_update', {'id': webhook.id}) }}" class="btn btn-sm btn-secondary">Update</a>
+    </div>
   </div>
 {% endblock %}

@@ -9,6 +9,11 @@
 
       <button class="btn btn-primary" type="submit">Save</button>
     </div>
+    {% if item.signingSecret is not null %}
+    <div class="card-body">
+      {% include 'webhook/sing-example.html.twig' with { 'webhook': item } %}
+    </div>
+    {% endif %}
     {{ form_end(form) }}
   </div>
 {% endblock %}

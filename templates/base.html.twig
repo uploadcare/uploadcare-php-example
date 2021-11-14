@@ -13,6 +13,9 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js"
           integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J"
           crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/languages/php.min.js"></script>
   <title>{% block title %}Welcome!{% endblock %}</title>
   {% block stylesheets %}{% endblock %}
 </head>
@@ -55,6 +58,7 @@
 {% block javascripts %}{% endblock %}
 <script>
   window.addEventListener('DOMContentLoaded', () => {
+    hljs.highlightAll();
     document.querySelectorAll('[data-method]').forEach(aEl => {
       aEl.addEventListener('click', e => {
         e.preventDefault()

@@ -48,19 +48,22 @@ class WebhooksController extends AbstractController
         $data = [
             'target_url' => null,
             'is_active' => true,
+            'signing_secret' => null,
         ];
 
         $form = $this->createFormBuilder($data)
             ->add('target_url', UrlType::class)
             ->add('is_active', CheckboxType::class, ['required' => false])
+            ->add('signing_secret', TextType::class, ['required' => false])
             ->getForm();
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $targetUrl = $form->get('target_url')->getData();
             $isActive = $form->get('is_active')->getData();
+            $signingSecret = $form->get('signing_secret')->getData();
 
-            $result = $this->api->webhook()->createWebhook($targetUrl, $isActive);
+            $result = $this->api->webhook()->createWebhook($targetUrl, $isActive, $signingSecret);
             if ($result instanceof WebhookInterface) {
                 return $this->redirectToRoute('webhooks_info', ['id' => $result->getId()]);
             }
@@ -97,12 +100,14 @@ class WebhooksController extends AbstractController
             'target_url' => $item->getTargetUrl(),
             'event' => $item->getEvent(),
             'is_active' => $item->isActive(),
+            'signing_secret' => $item->getSigningSecret(),
         ];
 
         $form = $this->createFormBuilder($updatedData)
             ->add('target_url', UrlType::class)
             ->add('event', TextType::class, ['disabled' => true])
             ->add('is_active', CheckboxType::class, ['required' => false])
+            ->add('signing_secret', TextType::class, ['required' => false])
             ->getForm()
         ;
 
