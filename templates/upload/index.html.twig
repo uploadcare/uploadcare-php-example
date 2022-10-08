@@ -5,7 +5,30 @@
 {% block body %}
 
   {{ form_start(form) }}
-  {{ form_rest(form) }}
+  {{ form_row(form.file) }}
+  {{ form_row(form.filename) }}
+  {{ form_row(form.mimeType) }}
+  {{ form_row(form.store) }}
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">File metadata</h5>
+      <ul id="metadata-fields-list"
+          class="list-unstyled"
+          data-prototype="{{ form_widget(form.metadata.vars.prototype)|e }}"
+          data-widget-tags="{{ '<li></li>'|e }}"
+          data-widget-counter="{{ form.metadata|length }}">
+      {% for metadataField in form.metadata %}
+        <li>
+          {{ form_widget(metadataField) }}
+        </li>
+      {% endfor %}
+      </ul>
+      <button type="button"
+              class="add-another-collection-widget btn btn-sm btn-info"
+              data-list-selector="metadata-fields-list"><i class="bi-plus-circle"></i> Add Metadata</button>
+    </div>
+  </div>
 
   <button class="btn btn-primary" type="submit">Upload file</button>
   {{ form_end(form) }}
@@ -15,13 +38,19 @@
 
   <script>
     window.addEventListener('DOMContentLoaded', () => {
-      const fileInputs = document.querySelectorAll('.custom-file-input')
-      fileInputs.forEach(inp => {
-        inp.addEventListener('change', evt => {
-          let labelElement = evt.currentTarget.nextSibling
-          labelElement.innerText = evt.currentTarget.files[0].name
-        })
-      })
-    })
+      document.querySelectorAll('.add-another-collection-widget').forEach(el => {
+          el.addEventListener('click', () => {
+              const selector = el.dataset.listSelector;
+              const list = document.getElementById(selector);
+              let counter = list.dataset.dataWidgetCounter || list.querySelectorAll('li').length;
+              const newWidget = list.dataset['prototype'].replace(/__name__/g, counter);
+              counter++;
+              list.dataset.dataWidgetCounter = counter;
+              const newElement = document.createElement('li');
+              newElement.innerHTML = newWidget
+              list.appendChild(newElement);
+          });
+      });
+    });
   </script>
 {% endblock %}

@@ -1,0 +1,21 @@
+{# @var \Uploadcare\Interfaces\File\File file #}
+<h4>Remove Background info</h4>
+
+<table class="table table-condensed table-bordered table-hover mt-2">
+  <tr>
+    <th>Version</th>
+    <td>{{ file.appdata.removeBg.version }}</td>
+  </tr>
+  <tr>
+    <th>Created at</th>
+    <td>{{ file.appdata.removeBg.datetimeCreated | date }}</td>
+  </tr>
+  <tr>
+    <th>Updated at</th>
+    <td>{{ file.appdata.removeBg.datetimeUpdated | date }}</td>
+  </tr>
+  <tr>
+    <th>Data</th>
+    <td>Foreground Type: {{ file.appdata.removeBg.data.foregroundType }}</td>
+  </tr>
+</table>

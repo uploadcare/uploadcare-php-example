@@ -84,9 +84,8 @@ TEXT;
             case 'path':
                 $this->asPath($path, $input, $output);
                 break;
-            case 'url':
-                $this->asUrl($path, $input, $output);
-                break;
+            default:
+                throw new RuntimeException('Parameter \'mode\' can be only \'resource\' or \'path\'');
         }
 
         return Command::SUCCESS;
@@ -136,24 +135,6 @@ TEXT;
     }
 
     /**
-     * Upload file from remote URL.
-     */
-    protected function asUrl(string $path, InputInterface $input, OutputInterface $output): void
-    {
-        $io = new SymfonyStyle($input, $output);
-        $io->title(\sprintf('Try to upload <info>%s</info> from url', $path));
-
-        try {
-            $result = $this->api->uploader()->fromUrl($path, $input->getOption('mime-type'), $input->getOption('filename'), $input->getOption('store'));
-        } catch (\Exception $e) {
-            throw new RuntimeException($e->getMessage());
-        }
-
-        $io->success('File uploaded');
-        $this->renderFileInfo($result, $io);
-    }
-
-    /**
      * Validate user input.
      */
     protected function validateInput(InputInterface $input): void
@@ -169,12 +150,12 @@ TEXT;
                 if (!\is_file($path) || !\is_readable($path)) {
                     throw new RuntimeException(\sprintf('Unable to read file from \'%s\'', $path));
                 }
-            break;
+                break;
             case 'url':
                 if (\strpos($input->getArgument('path'), 'http') !== 0) {
                     throw new RuntimeException(\sprintf('You should use valid URL for file in \'url\' upload mode, \'%s\' given', $input->getArgument('path')));
                 }
-            break;
+                break;
         }
     }
 }

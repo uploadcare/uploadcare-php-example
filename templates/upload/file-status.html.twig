@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}File status{% endblock %}
+
+{% block body %}
+  <div class="alert alert-{{ alert }}" role="alert">
+    File status is <strong>{{ status }}</strong>
+  </div>
+{% endblock %}

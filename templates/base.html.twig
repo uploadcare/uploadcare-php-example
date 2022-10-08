@@ -2,17 +2,13 @@
 <html lang="en" class="h-100">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css"
-        integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-          integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
           crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-          integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-          crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js"
-          integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J"
-          crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/languages/php.min.js"></script>
@@ -20,9 +16,11 @@
   {% block stylesheets %}{% endblock %}
 </head>
 <body class="align-items-end d-flex flex-column h-100">
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4 w-100">
-  <a class="navbar-brand" href="https://uploadcare.com" target="_blank">Uploadcare</a>
-</nav>
+<div class="container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4 w-100">
+    <a class="navbar-brand" href="https://uploadcare.com" target="_blank">Uploadcare</a>
+  </nav>
+</div>
 <div class="container-fluid">
   <div class="row">
     <aside class="col-sm-3">
@@ -57,20 +55,36 @@
 </div>
 {% block javascripts %}{% endblock %}
 <script>
-  window.addEventListener('DOMContentLoaded', () => {
-    hljs.highlightAll();
-    document.querySelectorAll('[data-method]').forEach(aEl => {
-      aEl.addEventListener('click', e => {
-        e.preventDefault()
-        const method = e.currentTarget.dataset.method || 'GET'
-        const form = document.createElement('form')
-        form.setAttribute('action', e.currentTarget.href)
-        form.setAttribute('method', method)
-        document.getElementsByTagName('body')[0].appendChild(form)
-        form.submit()
-      })
-    })
-  })
+    window.addEventListener('DOMContentLoaded', () => {
+        hljs.highlightAll();
+        document.querySelectorAll('[data-method]').forEach(aEl => {
+            aEl.addEventListener('click', e => {
+                e.preventDefault()
+                const method = e.currentTarget.dataset.method || 'GET'
+                const form = document.createElement('form')
+                form.setAttribute('action', e.currentTarget.href)
+                form.setAttribute('method', method)
+                document.getElementsByTagName('body')[0].appendChild(form)
+                form.submit()
+            })
+        });
+    });
+    (function (src, cb) {
+        const s = document.createElement('script');
+        s.setAttribute('src', src);
+        s.onload = cb;
+        (document.head || document.body).appendChild(s);
+    })('https://ucarecdn.com/libs/blinkloader/3.x/blinkloader.min.js', function () {
+        window.Blinkloader.optimize({
+            "pubkey": "{{ pub_key }}",
+            "responsive": true,
+            "smartCompression": true,
+            "retina": true,
+            "webp": true,
+            "fadeIn": true,
+            "lazyload": true
+        });
+    });
 </script>
 </body>
 </html>

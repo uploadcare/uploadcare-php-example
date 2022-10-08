@@ -1,3 +1,5 @@
+{# @var \Uploadcare\Interfaces\File\File file #}
+{# @var \Uploadcare\Interfaces\Response\ListResponseInterface list #}
 <div class="card">
   <div class="card-body">
     <h5 class="card-title">Total files: {{ list.total }}</h5>
@@ -11,32 +13,51 @@
   {% endif %}
   <ul class="list-group list-group-flush">
     {% for file in list.results %}
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        {% if file.imageInfo is not null %}
-          <a href="{{ file.originalFileUrl }}" target="_blank" class="img-thumbnail mr-2">
-            <div
-                style="width: 150px; height: 150px; background-image: url('https://ucarecdn.com/{{ file.uuid }}/-/format/auto/-/quality/smart/-/preview/160x160/'); background-position: 50% 50%; background-size: cover"></div>
-          </a>
-        {% else %}
-          <svg class="mr-2 img-thumbnail" style="text-anchor: middle" width="160" height="160"
-               xmlns="http://www.w3.org/2000/svg"
-               role="img" focusable="false">
-            <rect width="100%" height="100%" fill="#868e96"></rect>
-            <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Not an image</text>
-          </svg>
-        {% endif %}
-        <div class="text-place flex-grow-1 text-truncate">
-          <a href="{{ path('file_info', {'uuid': file.uuid}) }}">{{ file.originalFilename }}</a>
-          <br>
-          <div class="badge badge-secondary">{{ file.uuid }}</div>
-          <div class="badge badge-secondary">{{ file.mimeType }}</div>
+    <li class="list-group-item">
+      <div class="card mb-3 border-0">
+        <div class="row g-0">
+          <div class="col-md-2">
+            {% if file.contentInfo.image | default(null) is not null %}
+            <a href="{{ file.originalFileUrl }}" target="_blank">
+              <div data-blink-uuid="{{ file.uuid }}" style="width: 160px; height: 160px;"></div>
+            </a>
+            {% else %}
+              <svg style="text-anchor: middle" width="160" height="160"
+                   xmlns="http://www.w3.org/2000/svg"
+                   role="img" focusable="false">
+                <rect width="100%" height="100%" fill="#868e96"></rect>
+                <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Not an image</text>
+              </svg>
+            {% endif %}
+          </div>
+          <div class="col-md-10">
+            <div class="card-body">
+              <h5 class="card-title"><a href="{{ path('file_info', {'uuid': file.uuid}) }}">{{ file.originalFilename }}</a></h5>
+              <div class="card-text">
+                <div class="badge badge-secondary bg-success">{{ file.uuid }}</div><br>
+                <div class="badge badge-secondary bg-success">{{ file.mimeType }}</div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="btn-group" role="group" aria-label="Actions">
-          <a href="{{ path('store_file', {'uuid': file.uuid}) }}" class="btn btn-secondary btn-sm">Store</a>
-          <a data-method="POST" class="btn btn-danger btn-sm"
-             href="{{ path('delete_file', {'uuid': file.uuid}) }}">Delete</a>
-        </div>
-      </li>
+      </div>
+    </li>
     {% endfor %}
   </ul>
+  <div class="card-footer">
+    <nav aria-label="Files navigation">
+      <ul class="pagination">
+        {% if previous is not null %}
+          <li class="page-item"><a class="page-link" href="{{ path('file_list', previous) }}">Previous</a></li>
+        {% else %}
+          <li class="page-item disabled"><a class="page-link">Previous</a></li>
+        {% endif %}
+        {% if next is not null %}
+          <li class="page-item"><a class="page-link" href="{{ path('file_list', next) }}">Next</a></li>
+        {% else %}
+          <li class="page-item disabled"><a class="page-link">Next</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
 </div>

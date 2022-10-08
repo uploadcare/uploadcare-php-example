@@ -2,48 +2,27 @@
 
 namespace App\Controller;
 
+use App\DTO\FileUpload;
+use App\Form\FileUploadType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\{Extension\Core\Type\FileType, Extension\Core\Type\TextType};
-use Symfony\Component\HttpFoundation\{File\UploadedFile, Request, Response};
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\{Request, Response};
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\File;
 use Uploadcare\Api;
 use Uploadcare\Interfaces\Response\ListResponseInterface;
 
 #[Route(path: '/upload', name: 'upload_file')]
 class UploadController extends AbstractController
 {
-    private Api $api;
-
-    public function __construct(Api $api)
+    public function __construct(readonly private Api $api)
     {
-        $this->api = $api;
     }
 
     public function __invoke(Request $request): Response
     {
-        $data = [
-            'file' => null,
-            'mime-type' => null,
-            'filename' => null,
-            'store' => 'auto',
-        ];
-        $form = $this->createFormBuilder($data)
-            ->add('file', FileType::class, [
-                'label' => 'File for upload',
-                'required' => true,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '24M',
-                    ]),
-                ],
-            ])
-            ->add('mime-type', TextType::class, ['required' => false])
-            ->add('filename', TextType::class, ['required' => false])
-            ->add('store', TextType::class, ['required' => false])
-            ->getForm()
-        ;
+        $fileUpload = new FileUpload();
+        $form = $this->createForm(FileUploadType::class, $fileUpload);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -52,12 +31,22 @@ class UploadController extends AbstractController
                 throw new BadRequestHttpException('Unable to upload file');
             }
             $fileName = $form->get('filename')->getData();
-            if ($fileName === null) {
+            if (null === $fileName) {
                 $fileName = \pathinfo($file->getClientOriginalName(), \PATHINFO_FILENAME) . '.' . $file->guessClientExtension();
+            }
+            $metadata = [];
+            foreach ($fileUpload->getMetadata() as $metaItem) {
+                $metadata[$metaItem->getKey()] = $metaItem->getValue();
             }
 
             try {
-                $fileInfo = $this->api->uploader()->fromPath($file->getPathname(), $form->get('mime-type')->getData(), $fileName, $form->get('store')->getData());
+                $fileInfo = $this->api->uploader()->fromPath(
+                    path: $file->getPathname(),
+                    mimeType: $fileUpload->getMimeType(),
+                    filename: $fileName,
+                    store: $fileUpload->getStore(),
+                    metadata: $metadata,
+                );
             } catch (\Exception $e) {
                 throw new BadRequestHttpException($e->getMessage());
             }

@@ -1,0 +1,54 @@
+{# @var \Uploadcare\Interfaces\File\File file #}
+
+<h4>Recognition info</h4>
+<table class="table table-condensed table-bordered table-hover mt-2">
+  <tr>
+    <th>Version</th>
+    <td>{{ file.appdata.awsRekognitionDetectLabels.version }}</td>
+  </tr>
+  <tr>
+    <th>Created at</th>
+    <td>{{ file.appdata.awsRekognitionDetectLabels.datetimeCreated | date }}</td>
+  </tr>
+  <tr>
+    <th>Updated at</th>
+    <td>{{ file.appdata.awsRekognitionDetectLabels.datetimeUpdated | date }}</td>
+  </tr>
+  <tr>
+    <th>Label Model Version</th>
+    <td>{{ file.appdata.awsRekognitionDetectLabels.data.labelModelVersion | date }}</td>
+  </tr>
+</table>
+<h4>Labels</h4>
+<table class="table table-condensed table-bordered table-hover mt-2">
+  <tr>
+    <th>Name</th>
+    <th>Parents</th>
+    <th>Instances</th>
+  </tr>
+  {% for label in file.appdata.awsRekognitionDetectLabels.data.labels %}
+    <tr>
+      <td>{{ label.name }}<br><small>Confidence <span class="badge bg-secondary text-white">{{ label.confidence | number_format(2) }}</span></small></td>
+      <td>
+        {% for parent in label.parents %}
+          {{ parent.name }}<br>
+        {% endfor %}
+      </td>
+      <td>
+        {% if label.instances is not empty %}
+          <button class="btn btn-dark btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#inst" aria-expanded="false" aria-controls="collapseExample">
+            Instances
+          </button>
+          <ul class="collapse" id="inst">
+            {% for instance in label.instances %}
+              <li>
+                Confidence <span class="badge bg-secondary text-white">{{ instance.confidence | number_format(2) }}</span><br>
+                Bounding box: <span class="badge bg-secondary text-white">top {{ instance.boundingBox.top | number_format(2) }}, left {{ instance.boundingBox.left | number_format(2) }}, width {{ instance.boundingBox.width | number_format(2) }}, height {{ instance.boundingBox.height | number_format(2) }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+</table>

@@ -75,6 +75,6 @@ class DocumentConversionController extends AbstractController
         $source = ['doc', 'docx', 'xls', 'xlsx', 'odt', 'ods', 'rtf', 'txt', 'pdf', 'jpg', 'png'];
         $names = \array_map(static fn (string $name) => \strtoupper($name), $source);
 
-        return array_combine($names, $source);
+        return \array_combine($names, $source);
     }
 }

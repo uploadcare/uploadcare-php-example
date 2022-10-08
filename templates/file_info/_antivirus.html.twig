@@ -1,0 +1,27 @@
+{# @var \Uploadcare\Interfaces\File\File file #}
+<h4>Antivirus scan</h4>
+
+<table class="table table-condensed table-bordered table-hover mt-2">
+  <tr>
+    <th>Version</th>
+    <td>{{ file.appdata.clamAvVirusScan.version }}</td>
+  </tr>
+  <tr>
+    <th>Created at</th>
+    <td>{{ file.appdata.clamAvVirusScan.datetimeCreated | date }}</td>
+  </tr>
+  <tr>
+    <th>Updated at</th>
+    <td>{{ file.appdata.clamAvVirusScan.datetimeUpdated | date }}</td>
+  </tr>
+  <tr>
+    <th>Infected</th>
+    <td>
+      {% if file.appdata.clamAvVirusScan.data.infected %}
+        <span class="badge badge-danger">Infected with {{ file.appdata.clamAvVirusScan.data.infectedWith }}</span>
+      {% else %}
+        <span class="badge badge-success bg-success">Not infected</span>
+      {% endif %}
+    </td>
+  </tr>
+</table>
