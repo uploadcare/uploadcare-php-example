@@ -10,11 +10,8 @@ use Uploadcare\Api;
 #[Route(path: '/', name: 'project_info')]
 class ProjectInfoController extends AbstractController
 {
-    private Api $api;
-
-    public function __construct(Api $api)
+    public function __construct(readonly private Api $api)
     {
-        $this->api = $api;
     }
 
     public function __invoke(): Response

@@ -16,11 +16,8 @@ use Uploadcare\Interfaces\Conversion\ConvertedItemInterface;
 
 class VideoConversionController extends AbstractController
 {
-    private Api $api;
-
-    public function __construct(Api $api)
+    public function __construct(readonly private Api $api)
     {
-        $this->api = $api;
     }
 
     #[Route(path: '/convert-video/{videoId<.+>?}', name: 'video_convert_request')]

@@ -12,11 +12,8 @@ use Uploadcare\Api;
 #[Route(path: '/batch-store', name: 'batch_store_file')]
 class BatchStoreController extends AbstractController
 {
-    private Api $api;
-
-    public function __construct(Api $api)
+    public function __construct(readonly private Api $api)
     {
-        $this->api = $api;
     }
 
     public function __invoke(Request $request): Response

@@ -3,8 +3,8 @@
 namespace App\Form;
 
 use App\DTO\FileUpload;
-use Symfony\Component\Form\Extension\Core\Type\{ChoiceType, CollectionType, FileType, TextType};
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\{ChoiceType, CollectionType, FileType, TextType};
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;

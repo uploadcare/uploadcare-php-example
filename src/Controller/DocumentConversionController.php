@@ -17,11 +17,8 @@ use Uploadcare\Interfaces\File\FileInfoInterface;
 
 class DocumentConversionController extends AbstractController
 {
-    private Api $api;
-
-    public function __construct(Api $api)
+    public function __construct(readonly private Api $api)
     {
-        $this->api = $api;
     }
 
     #[Route(path: '/convert-document', name: 'document_conversion')]

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "440aad49df0d2fdb8ff453c048d9368c",
+    "content-hash": "7adea10286b7e1a5f77095c0e7d6d011",
     "packages": [
         {
             "name": "doctrine/collections",
@@ -4408,10 +4408,16 @@
         {
             "name": "uploadcare/uploadcare-php",
             "version": "dev-update/api07",
-            "dist": {
-                "type": "path",
-                "url": "../v3-uploadcare-php",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/uploadcare/uploadcare-php.git",
                 "reference": "aadef3d68e2003a874097e543ef901d62420e9e9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/uploadcare/uploadcare-php/zipball/aadef3d68e2003a874097e543ef901d62420e9e9",
+                "reference": "aadef3d68e2003a874097e543ef901d62420e9e9",
+                "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
@@ -4436,11 +4442,7 @@
                     "Uploadcare\\": "./src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Tests\\": "tests"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -4462,11 +4464,10 @@
             ],
             "support": {
                 "email": "help@uploadcare.com",
-                "issues": "https://github.com/uploadcare/uploadcare-php/issues"
+                "issues": "https://github.com/uploadcare/uploadcare-php/issues",
+                "source": "https://github.com/uploadcare/uploadcare-php/tree/update/api07"
             },
-            "transport-options": {
-                "relative": true
-            }
+            "time": "2022-10-08T12:29:12+00:00"
         }
     ],
     "packages-dev": [
