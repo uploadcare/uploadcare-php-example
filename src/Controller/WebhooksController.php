@@ -16,11 +16,8 @@ use Uploadcare\Interfaces\Response\WebhookInterface;
 
 class WebhooksController extends AbstractController
 {
-    private Api $api;
-
-    public function __construct(Api $api)
+    public function __construct(readonly private Api $api)
     {
-        $this->api = $api;
     }
 
     #[Route(path: '/webhooks', name: 'webhooks_list')]

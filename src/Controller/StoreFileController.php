@@ -13,11 +13,8 @@ use Uploadcare\File;
 #[Route(path: '/store/{uuid<.+>}', name: 'store_file')]
 class StoreFileController extends AbstractController
 {
-    private Api $api;
-
-    public function __construct(Api $api)
+    public function __construct(readonly private Api $api)
     {
-        $this->api = $api;
     }
 
     /**

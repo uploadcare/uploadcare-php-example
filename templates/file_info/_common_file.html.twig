@@ -1,3 +1,4 @@
+{# @var \Uploadcare\Interfaces\File\File file #}
 <table class="table table-condensed table-bordered table-hover mt-2">
   <tr>
     <th>UUID</th>
@@ -53,14 +54,4 @@
       {% endif %}
     </td>
   </tr>
-  <tr>
-    <th>Recognition info</th>
-    <td>
-      {% if file.rekognitionInfo is not empty %}
-      {% else %}
-        Recognition info is empty
-      {% endif %}
-    </td>
-  </tr>
 </table>
-

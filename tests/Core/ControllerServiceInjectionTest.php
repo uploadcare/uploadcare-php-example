@@ -1,19 +1,19 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Tests\Core;
 
-use App\Controller\{
-    BatchDeleteController,
-    BatchStoreController,
-    DeleteFileController,
-    DocumentConversionController,
-    FileInfoController,
-    GroupController,
-    StoreFileController,
-    UploadController,
-    VideoConversionController,
-    WebhooksController
-};
+use App\Controller\BatchDeleteController;
+use App\Controller\BatchStoreController;
+use App\Controller\DeleteFileController;
+use App\Controller\DocumentConversionController;
+use App\Controller\FileInfoController;
+use App\Controller\GroupController;
+use App\Controller\StoreFileController;
+use App\Controller\UploadController;
+use App\Controller\VideoConversionController;
+use App\Controller\WebhooksController;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Uploadcare\Api;
 
@@ -42,11 +42,9 @@ class ControllerServiceInjectionTest extends KernelTestCase
      */
     public function testAnyController(string $controllerClass): void
     {
-        self::bootKernel();
-        $command = self::$container->get($controllerClass);
+        $command = self::getContainer()->get($controllerClass);
         $reflection = (new \ReflectionObject($command));
         $api = $reflection->getProperty('api');
-        $api->setAccessible(true);
 
         self::assertInstanceOf(Api::class, $api->getValue($command));
     }

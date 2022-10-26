@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
+use App\DTO\UrlFileUpload;
+use App\Form\UploadFromUrlType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\{Request, Response};
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,36 +13,38 @@ use Uploadcare\Api;
 #[Route(path: '/upload-from-url', name: 'upload_from_url')]
 class UploadFromUrlController extends AbstractController
 {
-    public function __construct(private Api $api)
+    public function __construct(readonly private Api $api)
     {
     }
 
     public function __invoke(Request $request): Response
     {
-        $data = [
-            'url' => null,
-            'filename' => null,
-        ];
-        $form = $this->createFormBuilder($data)
-            ->add('url', TextType::class, [
-                'label' => 'File URL',
-                'required' => true,
-            ])
-            ->add('filename', TextType::class, ['required' => false])
-            ->getForm()
-        ;
+        $data = new UrlFileUpload();
+        $form = $this->createForm(UploadFromUrlType::class, $data);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $metadata = [];
+            foreach ($data->getMetadata() as $metaItem) {
+                $metadata[$metaItem->getKey()] = $metaItem->getValue();
+            }
+            if ($data->isCheckForDuplicates()) {
+                $metadata = ['checkDuplicates' => true];
+            }
+
             try {
-                $fileInfo = $this->api->uploader()->fromUrl(url: $form->get('url')->getData(), filename: $form->get('filename')->getData());
+                $token = $this->api->uploader()->fromUrl(
+                    url: $data->getUrl(),
+                    filename: $data->getFilename(),
+                    metadata: $metadata,
+                );
             } catch (\Throwable $e) {
                 throw new BadRequestHttpException($e->getMessage());
             }
 
-            $this->addFlash('success', \sprintf('File uploaded successfully and gets a %s uuid', $fileInfo->getUuid()));
+            $this->addFlash('success', \sprintf('Process started. Id token is %s', $token));
 
-            return $this->redirectToRoute('file_info', ['uuid' => $fileInfo->getUuid()]);
+            return $this->redirectToRoute('upload_check_status', ['token' => $token]);
         }
 
         return $this->render('upload/from-url.html.twig', [

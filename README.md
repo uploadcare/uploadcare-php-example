@@ -59,7 +59,7 @@ docker run -it --rm -p 8000:8000 -e UPLOADCARE_PUBLIC_KEY=<your public key> -e U
 
 Requirements:
 
-- php 7.4
+- php 8.1
 - ext-ctype
 - ext-iconv
 - ext-curl

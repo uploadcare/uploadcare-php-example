@@ -1,0 +1,11 @@
+{# @var \Uploadcare\Interfaces\File\File file #}
+<h4>File metadata</h4>
+
+<table class="table table-condensed table-bordered table-hover mt-2">
+  {% for key, value in file.metadata %}
+    <tr>
+      <th>{{ key }}</th>
+      <td>{{ value }}</td>
+    </tr>
+  {% endfor %}
+</table>

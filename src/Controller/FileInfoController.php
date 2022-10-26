@@ -3,18 +3,16 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\{Request, Response};
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Uploadcare\Api;
 
 class FileInfoController extends AbstractController
 {
-    private Api $api;
-
-    public function __construct(Api $api)
+    public function __construct(readonly private Api $api)
     {
-        $this->api = $api;
     }
 
     #[Route(path: '/file-list', name: 'file_list')]
@@ -25,10 +23,13 @@ class FileInfoController extends AbstractController
             'orderBy' => $request->get('orderBy', '-datetime_uploaded'),
             'from' => $request->get('from', null),
         ];
+        $response = $this->api->file()->listFiles(...\array_values($parameters));
 
         return $this->render('file_info/index.html.twig', [
-            'list' => $this->api->file()->listFiles(...\array_values($parameters)),
+            'list' => $response,
             'project' => $this->api->project()->getProjectInfo(),
+            'next' => $this->api->file()->getPageRequestParameters($response->getNext()),
+            'previous' => $this->api->file()->getPageRequestParameters($response->getPrevious()),
         ]);
     }
 

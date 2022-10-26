@@ -31,7 +31,7 @@ class FileDeleteCommand extends Command
             ->addArgument('uuid', InputArgument::REQUIRED, 'File UUID');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 

@@ -47,7 +47,7 @@ TEXT;
             ['Name', $projectInfo->getName()],
             ['Public key', $projectInfo->getPubKey()],
             ['Is auto-store enabled', $projectInfo->isAutostoreEnabled() ? 'Yes' : 'No'],
-            ['Collaborators', \implode(', ', \array_map(static fn ($arr) => ($arr['name'] ?? ''), $projectInfo->getCollaborators()))],
+            ['Collaborators', \implode(', ', \array_map(static fn ($arr) => $arr['name'] ?? '', $projectInfo->getCollaborators()))],
         ]);
     }
 }

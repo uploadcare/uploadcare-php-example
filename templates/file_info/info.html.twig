@@ -5,20 +5,62 @@
 {% block body %}
   <a href="{{ path('file_list') }}">Back to files</a>
   <hr>
-  <h4 class="d-flex justify-content-between align-items-center">
-    Remote file
-    <a href="{{ path('store_file', {'uuid': file.uuid}) }}" class="btn btn-secondary">Store</a>
-  </h4>
+  {% if file.contentInfo.image is not null %}
+    <img data-blink-uuid="{{ file.uuid }}"
+         src="https://ucarecdn.com/{{ file.uuid }}/-/format/auto/-/quality/smart/-/preview/" class="img-fluid"
+         alt="{{ file.originalFilename }}">
+    <hr>
+  {% endif %}
+  <div class="d-flex justify-content-between align-items-center">
+    <h5>Remote file</h5>
+
+    <div class="btn-group" role="group" aria-label="File actions">
+      {% if file.datetimeStored is empty %}
+        <a href="{{ path('store_file', {'uuid': file.uuid}) }}" class="btn btn-secondary">Store</a>
+      {% else %}
+        <span class="btn btn-outline-secondary">File already stored</span>
+      {% endif %}
+
+      {% if file.contentInfo.image is not null %}
+
+      {% if file.appdata.awsRekognitionDetectLabels is not empty %}
+        <span class="btn btn-outline-secondary">File already recognized</span>
+      {% else %}
+        <a href="{{ path('recognize_objects', {'uuid': file.uuid}) }}" class="btn btn-secondary">Recognize objects</a>
+      {% endif %}
+      {% if file.appdata.removeBg is not empty %}
+        <span class="btn btn-outline-secondary">Background already removed</span>
+      {% else %}
+        <a href="{{ path('remove_background', {'uuid': file.uuid}) }}" class="btn btn-secondary">Remove background</a>
+      {% endif %}
+
+      {% endif %}
+    </div>
+
+  </div>
+
   <div class="table-responsive">
     {% include 'file_info/_common_file.html.twig' %}
   </div>
-
-  {% if file.imageInfo is not null %}
-    {% include 'file_info/_image_info.html.twig' %}
+  {% if file.appdata.awsRekognitionDetectLabels is not empty %}
+    <div class="table-responsive">
+      {% include 'file_info/_recognition_data.html.twig' %}
+    </div>
   {% endif %}
-
-  {% if file.videoInfo is not null %}
-    {% include 'file_info/_video_info.html.twig' %}
+  {% if file.appdata.clamAvVirusScan is not empty %}
+    <div class="table-responsive">
+      {% include 'file_info/_antivirus.html.twig' %}
+    </div>
+  {% endif %}
+  {% if file.appdata.removeBg is not empty %}
+    <div class="table-responsive">
+      {% include 'file_info/_remove_bg.html.twig' %}
+    </div>
+  {% endif %}
+  {% if file.metadata is not empty %}
+    <div class="table-responsive">
+      {% include 'file_info/_metadata.html.twig' %}
+    </div>
   {% endif %}
 
   <a data-method="POST" class="btn btn-danger" href="{{ path('delete_file', {'uuid': file.uuid}) }}">Delete file</a>

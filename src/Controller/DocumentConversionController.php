@@ -17,11 +17,8 @@ use Uploadcare\Interfaces\File\FileInfoInterface;
 
 class DocumentConversionController extends AbstractController
 {
-    private Api $api;
-
-    public function __construct(Api $api)
+    public function __construct(readonly private Api $api)
     {
-        $this->api = $api;
     }
 
     #[Route(path: '/convert-document', name: 'document_conversion')]
@@ -75,6 +72,6 @@ class DocumentConversionController extends AbstractController
         $source = ['doc', 'docx', 'xls', 'xlsx', 'odt', 'ods', 'rtf', 'txt', 'pdf', 'jpg', 'png'];
         $names = \array_map(static fn (string $name) => \strtoupper($name), $source);
 
-        return array_combine($names, $source);
+        return \array_combine($names, $source);
     }
 }
