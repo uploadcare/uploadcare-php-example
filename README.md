@@ -196,11 +196,24 @@ Steps to run:
 1. Open `https://localhost:8000/upload` in your web browser.
 2. Select a file to upload and then see how it’s uploaded.
 
+You can also add [metadata](https://uploadcare.com/docs/file-metadata/) to the file before upload.
+
 ### Files and file info
 
 If you have files in your project, you can see them in the `/file-list` directory or by using a a`pp:file-info [file-id]` command. There are console examples in `src/Command/FileInfoCommand.php` and web examples in the `src/Controller/FileInfoController.php`
 
-![File list](references/file-list.png)
+#### File info
+
+On the file info page you will see the common information (uuid, original file name, type, url, etc.) and [add-ons](https://github.com/uploadcare/uploadcare-php#addons-operations) info. Addons are:
+- [Objects recognition info](https://github.com/uploadcare/uploadcare-php#object-recognition) — allows you to get the information about objects on the image.
+- [Remove Background info](https://github.com/uploadcare/uploadcare-php#remove-background) — you can automatically remove background from the image.
+- [Antivirus scan info](https://github.com/uploadcare/uploadcare-php#antivirus-scan) — all uploaded files are scan for viruses with ClamAV.
+
+![Objects recognition](references/recognition-info.png)
+
+![Remove background](references/remove-background-info.png)
+
+![Antivirus Info](references/antivirus-info.png)
 
 ## Store file
 
