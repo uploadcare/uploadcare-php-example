@@ -11,6 +11,7 @@ class UrlFileUpload
     private string | null $url = null;
     private string | null $filename = null;
     private bool $checkForDuplicates = false;
+    private array $tags = [];
     private Collection $metadata;
 
     public function __construct()
@@ -50,6 +51,21 @@ class UrlFileUpload
     public function setCheckForDuplicates(bool $checkForDuplicates): self
     {
         $this->checkForDuplicates = $checkForDuplicates;
+
+        return $this;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function getTags(): array
+    {
+        return $this->tags;
+    }
+
+    public function setTags(array $tags): self
+    {
+        $this->tags = $tags;
 
         return $this;
     }

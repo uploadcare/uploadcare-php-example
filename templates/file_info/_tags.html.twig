@@ -1,0 +1,13 @@
+{# @var \Uploadcare\Interfaces\File\FileInfoInterface file #}
+<div class="d-flex justify-content-between align-items-center">
+  <h4>File tags</h4>
+  <a href="{{ path('file_tags', {'uuid': file.uuid}) }}" class="btn btn-sm btn-secondary">Manage tags</a>
+</div>
+
+<p class="mt-2">
+  {% for tag in file.tags %}
+    <a href="{{ path('file_search', {'tagsAny': tag}) }}" class="badge bg-info text-dark text-decoration-none">{{ tag }}</a>
+  {% else %}
+    <span class="text-muted">This file has no tags.</span>
+  {% endfor %}
+</p>

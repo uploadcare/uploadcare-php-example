@@ -28,6 +28,7 @@ trait RenderFileInfoTrait
             ['Original filename', $fileInfo->getOriginalFilename()],
             ['Size', $fileInfo->getSize()],
             ['Source', $fileInfo->getSource()],
+            ['Tags', \count($fileInfo->getTags()) > 0 ? (string) $fileInfo->getTags() : 'No tags'],
         ]);
 
         if (($imageInfo = $fileInfo->getImageInfo()) !== null) {

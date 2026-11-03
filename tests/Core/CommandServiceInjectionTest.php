@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Tests\Core;
 
 use App\Command\FileInfoCommand;
+use App\Command\FileTagsCommand;
 use App\Command\ProjectInfoCommand;
+use App\Command\SearchCommand;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Uploadcare\Api;
 
@@ -16,6 +18,8 @@ class CommandServiceInjectionTest extends KernelTestCase
         return [
             [FileInfoCommand::class],
             [ProjectInfoCommand::class],
+            [FileTagsCommand::class],
+            [SearchCommand::class],
         ];
     }
 

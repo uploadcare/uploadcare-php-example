@@ -11,6 +11,7 @@ class FileUpload
     private string | null $mimeType = null;
     #[Assert\Choice(choices: ['auto', '0', '1'])]
     private string $store = 'auto';
+    private array $tags = [];
     private Collection $metadata;
 
     public function __construct()
@@ -50,6 +51,21 @@ class FileUpload
     public function setStore(string $store): FileUpload
     {
         $this->store = $store;
+
+        return $this;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function getTags(): array
+    {
+        return $this->tags;
+    }
+
+    public function setTags(array $tags): self
+    {
+        $this->tags = $tags;
 
         return $this;
     }

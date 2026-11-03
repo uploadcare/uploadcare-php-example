@@ -24,6 +24,7 @@ class FileUploadType extends AbstractType
                 ],
                 'required' => true,
             ])
+            ->add('tags', TagsType::class)
             ->add('file', FileType::class, [
                 'label' => 'File',
                 'mapped' => false,

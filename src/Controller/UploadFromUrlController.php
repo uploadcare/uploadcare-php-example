@@ -37,6 +37,7 @@ class UploadFromUrlController extends AbstractController
                     url: $data->getUrl(),
                     filename: $data->getFilename(),
                     metadata: $metadata,
+                    tags: $data->getTags(),
                 );
             } catch (\Throwable $e) {
                 throw new BadRequestHttpException($e->getMessage());

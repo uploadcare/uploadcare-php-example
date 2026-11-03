@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}File {{ file.originalFilename | u.truncate(25, '…') }} tags{% endblock %}
+
+{% block body %}
+  <a href="{{ path('file_info', {'uuid': file.uuid}) }}">Back to file</a>
+  <hr>
+
+  <h5>Current tags</h5>
+  <p>
+    {% for tag in file.tags %}
+      <span class="badge bg-info text-dark">{{ tag }}</span>
+    {% else %}
+      <span class="text-muted">This file has no tags.</span>
+    {% endfor %}
+  </p>
+  <p class="small text-muted">
+    Tags are lowercased, trimmed and deduplicated by the API. A file can have up to 50 tags, each up to 100 characters.
+  </p>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Add or remove tags</h5>
+          <p class="card-text small"><code>$api->tags()->updateTags($uuid, $add, $delete)</code> — removal is applied first, then addition.</p>
+          {{ form_start(update_form) }}
+          {{ form_rest(update_form) }}
+          <button class="btn btn-primary" type="submit">Update tags</button>
+          {{ form_end(update_form) }}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Replace all tags</h5>
+          <p class="card-text small"><code>$api->tags()->replaceTags($uuid, $tags)</code></p>
+          {{ form_start(replace_form) }}
+          {{ form_rest(replace_form) }}
+          <button class="btn btn-warning" type="submit">Replace tags</button>
+          {{ form_end(replace_form) }}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

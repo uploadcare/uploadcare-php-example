@@ -42,6 +42,7 @@ You can define any API-related option with this command:
 - <fg=green>mime-type</> — target mime-type for file
 - <fg=green>filename</> — target filename
 - <fg=green>store</> — store mode for file ('auto' as default)
+- <fg=green>tag</> — file tag, repeat the option for several tags: <fg=green>--tag=cat --tag=animal</>
 TEXT;
 
     protected static $defaultName = 'app:upload-file';
@@ -68,6 +69,7 @@ TEXT;
             ->addOption('mime-type', null, InputOption::VALUE_OPTIONAL, 'Target MIME-type')
             ->addOption('filename', null, InputOption::VALUE_OPTIONAL, 'Target filename')
             ->addOption('store', null, InputOption::VALUE_OPTIONAL, 'Store file in storage', 'auto')
+            ->addOption('tag', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'File tag, can be used several times')
             ->setHelp(self::$help)
         ;
     }
@@ -107,13 +109,14 @@ TEXT;
         }
         $table->render();
         try {
-            $result = $this->api->uploader()->fromResource($handle, $input->getOption('mime-type'), $input->getOption('filename'), $input->getOption('store'));
+            $result = $this->api->uploader()->fromResource($handle, $input->getOption('mime-type'), $input->getOption('filename'), $input->getOption('store'), [], $input->getOption('tag'));
         } catch (\Exception $e) {
             throw new RuntimeException($e->getMessage());
         }
 
         $io->success('File uploaded');
         $this->renderFileInfo($result, $io);
+        $this->noteTags($result->getUuid(), $input, $io);
     }
 
     /**
@@ -125,13 +128,24 @@ TEXT;
         $io->title(\sprintf('Try to upload <info>%s</info> from path', $path));
 
         try {
-            $result = $this->api->uploader()->fromPath($path, $input->getOption('mime-type'), $input->getOption('filename'), $input->getOption('store'));
+            $result = $this->api->uploader()->fromPath($path, $input->getOption('mime-type'), $input->getOption('filename'), $input->getOption('store'), [], $input->getOption('tag'));
         } catch (\Exception $e) {
             throw new RuntimeException($e->getMessage());
         }
 
         $io->success('File uploaded');
         $this->renderFileInfo($result, $io);
+        $this->noteTags($result->getUuid(), $input, $io);
+    }
+
+    /**
+     * The upload response does not contain tags, so they are not in the file info above.
+     */
+    protected function noteTags(string $uuid, InputInterface $input, SymfonyStyle $io): void
+    {
+        if ($input->getOption('tag') !== []) {
+            $io->note(\sprintf('Tags are not a part of the upload response. Run app:file-tags %s to see them.', $uuid));
+        }
     }
 
     /**

@@ -15,6 +15,7 @@ class UploadFromUrlType extends AbstractType
         $builder->add('url', UrlType::class, ['required' => true])
             ->add('filename', TextType::class, ['required' => false])
             ->add('checkForDuplicates', CheckboxType::class, ['required' => false])
+            ->add('tags', TagsType::class)
             ->add('metadata', CollectionType::class, [
                 'entry_type' => MetadataType::class,
                 'allow_add' => true,
