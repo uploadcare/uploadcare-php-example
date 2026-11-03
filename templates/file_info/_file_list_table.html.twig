@@ -36,6 +36,9 @@
               <div class="card-text">
                 <div class="badge badge-secondary bg-success">{{ file.uuid }}</div><br>
                 <div class="badge badge-secondary bg-success">{{ file.mimeType }}</div>
+                {% for tag in file.tags %}
+                  <span class="badge bg-info text-dark">{{ tag }}</span>
+                {% endfor %}
               </div>
             </div>
           </div>

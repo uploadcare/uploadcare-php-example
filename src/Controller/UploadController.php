@@ -46,6 +46,7 @@ class UploadController extends AbstractController
                     filename: $fileName,
                     store: $fileUpload->getStore(),
                     metadata: $metadata,
+                    tags: $fileUpload->getTags(),
                 );
             } catch (\Exception $e) {
                 throw new BadRequestHttpException($e->getMessage());

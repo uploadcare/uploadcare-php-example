@@ -14,6 +14,8 @@ The project is based on the Symfony Framework, and the library can be used in an
 - [File operations](#file-operations)
     - [Upload file](#upload-file)
     - [Get files list and file info](#files-and-file-info)
+    - [File tags](#file-tags)
+    - [File search](#file-search)
     - [Example of store file](#store-file)
     - [Example of delete file](#delete-file)
     - [Batch store files](#batch-store-files)
@@ -196,7 +198,7 @@ Steps to run:
 1. Open `https://localhost:8000/upload` in your web browser.
 2. Select a file to upload and then see how it’s uploaded.
 
-You can also add [metadata](https://uploadcare.com/docs/file-metadata/) to the file before upload.
+You can also add [metadata](https://uploadcare.com/docs/file-metadata/) and [tags](#file-tags) to the file before upload.
 
 ### Files and file info
 
@@ -214,6 +216,81 @@ On the file info page you will see the common information (uuid, original file n
 ![Remove background](references/remove-background-info.png)
 
 ![Antivirus Info](references/antivirus-info.png)
+
+### File tags
+
+Every file can carry up to 50 searchable [tags](https://uploadcare.com/docs/file-tags/). Tags are a part of the file info, so the file list and the file info page show them without extra requests (`$file->getTags()`).
+
+Tags can be attached right on upload: fill the "Tags" field on `/upload` and `/upload-from-url`, or pass `--tag` to the console command:
+
+`bin/console app:upload-file data/24hr-NewYork-5K.jpg --tag=city --tag=night`
+
+Under the hood, every upload method accepts the tag list as the last argument:
+
+```php
+$api->uploader()->fromPath($path, 'image/jpeg', null, 'auto', [], ['city', 'night']);
+```
+
+To change tags of an existing file, click "Manage tags" on the file info page (`/file-tags/{uuid}`, see `FileTagsController`), or use the console command (`src/Command/FileTagsCommand.php`):
+
+```shell script
+bin/console app:file-tags <uuid>                                  # show tags
+bin/console app:file-tags <uuid> --add=cat --add=cute --delete=dog # add and remove at once
+bin/console app:file-tags <uuid> --replace=cat --replace=animal    # replace the whole set
+bin/console app:file-tags <uuid> --clear                           # remove all tags
+```
+
+These are the three methods of the tags API:
+
+```php
+$tagsApi = $api->tags();
+
+$tagsApi->getTags($uuid);                          // Uploadcare\File\Tags
+$result = $tagsApi->updateTags($uuid, ['cat'], ['dog']);
+$result = $tagsApi->replaceTags($uuid, ['cat', 'animal']);
+
+$result->getTags();    // the resulting list
+$result->getAdded();   // tags that have been added
+$result->getDeleted(); // tags that have been removed
+```
+
+The API lowercases, trims and deduplicates tags. Only Latin letters, digits, hyphen, underscore and dot are allowed, up to 100 characters per tag.
+
+### File search
+
+The `/search` page ("Search files" menu item) builds a [file search](https://uploadcare.com/docs/file-search/) query from the form: full-text query, filename, exact MIME type, tags (any / all / none), images only, upload date and size ranges, typo tolerance and sort order. All filled conditions are combined with AND. Matched words of full-text conditions are highlighted in the results. Clicking a tag anywhere in the UI searches for files with that tag. See `SearchController` for the code.
+
+```php
+use Uploadcare\Search\SearchQuery;
+
+$query = (new SearchQuery())
+    ->phrase(SearchQuery::FIELD_ORIGINAL_FILENAME, 'invoice')
+    ->exact(SearchQuery::FIELD_MIME_TYPE, ['application/pdf'])
+    ->tagsAny(['paid', 'pending'])
+    ->datetimeUploaded(SearchQuery::GTE, new \DateTimeImmutable('2024-01-01'))
+    ->sort('-datetime_uploaded');
+
+$result = $api->search()->search($query, 20);
+foreach ($result->getResults() as $file) {
+    echo $file->getOriginalFilename(), ' ', \json_encode($result->getHighlight($file)), \PHP_EOL;
+}
+
+$next = $api->search()->nextPage($result); // null on the last page
+```
+
+The same search is available in the console (`src/Command/SearchCommand.php`). Pass `--all` to page through all results with `nextPage()`:
+
+```shell script
+bin/console app:search --tag-any=cat --tag-none=draft --images --sort=-datetime_uploaded --all
+bin/console app:search --query=invoice --mime-type=application/pdf
+```
+
+Keep in mind:
+
+- `query` and filename terms must be at least 4 characters long.
+- Only the first 1000 results can be paged through, so narrow the query to see the rest.
+- Filter-only searches have no relevance score, so set a sort order for them.
+- Files are indexed asynchronously: new uploads and tag changes take up to 15 seconds to show up.
 
 ## Store file
 

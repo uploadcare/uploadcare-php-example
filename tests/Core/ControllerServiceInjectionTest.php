@@ -9,7 +9,9 @@ use App\Controller\BatchStoreController;
 use App\Controller\DeleteFileController;
 use App\Controller\DocumentConversionController;
 use App\Controller\FileInfoController;
+use App\Controller\FileTagsController;
 use App\Controller\GroupController;
+use App\Controller\SearchController;
 use App\Controller\StoreFileController;
 use App\Controller\UploadController;
 use App\Controller\VideoConversionController;
@@ -27,7 +29,9 @@ class ControllerServiceInjectionTest extends KernelTestCase
             [DeleteFileController::class],
             [DocumentConversionController::class],
             [FileInfoController::class],
+            [FileTagsController::class],
             [GroupController::class],
+            [SearchController::class],
             [StoreFileController::class],
             [UploadController::class],
             [VideoConversionController::class],

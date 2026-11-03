@@ -42,6 +42,7 @@
   <div class="table-responsive">
     {% include 'file_info/_common_file.html.twig' %}
   </div>
+  {% include 'file_info/_tags.html.twig' %}
   {% if file.appdata.awsRekognitionDetectLabels is not empty %}
     <div class="table-responsive">
       {% include 'file_info/_recognition_data.html.twig' %}

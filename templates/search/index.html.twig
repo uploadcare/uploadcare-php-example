@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Search files{% endblock %}
+
+{# Highlights wrap matched tokens in <em>. Escape everything else, the filename is user content #}
+{% macro highlighted(value) %}{{ value|e|replace({'&lt;em&gt;': '<mark>', '&lt;/em&gt;': '</mark>'})|raw }}{% endmacro %}
+
+{% block body %}
+  {% import _self as search %}
+  {{ form_start(form) }}
+  {{ form_errors(form) }}
+  <div class="row">
+    <div class="col-md-6">{{ form_row(form.query) }}</div>
+    <div class="col-md-6">{{ form_row(form.filename) }}</div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">{{ form_row(form.tagsAny) }}</div>
+    <div class="col-md-4">{{ form_row(form.tagsAll) }}</div>
+    <div class="col-md-4">{{ form_row(form.tagsNone) }}</div>
+  </div>
+
+  <details class="mb-3" {{ form.mimeType.vars.value or form.uploadedFrom.vars.value or form.uploadedTo.vars.value or form.sizeFrom.vars.value or form.sizeTo.vars.value ? 'open' : '' }}>
+    <summary class="mb-2">More filters</summary>
+    <div class="row">
+      <div class="col-md-6">{{ form_row(form.mimeType) }}</div>
+      <div class="col-md-6">{{ form_row(form.isImage) }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">{{ form_row(form.uploadedFrom) }}</div>
+      <div class="col-md-3">{{ form_row(form.uploadedTo) }}</div>
+      <div class="col-md-3">{{ form_row(form.sizeFrom) }}</div>
+      <div class="col-md-3">{{ form_row(form.sizeTo) }}</div>
+    </div>
+  </details>
+
+  <div class="row align-items-end">
+    <div class="col-md-4">{{ form_row(form.sort) }}</div>
+    <div class="col-md-2">{{ form_row(form.limit) }}</div>
+    <div class="col-md-3">{{ form_row(form.fuzziness) }}</div>
+    <div class="col-md-3 mb-3"><button class="btn btn-primary w-100" type="submit">Search</button></div>
+  </div>
+  {{ form_end(form) }}
+
+  <p class="small text-muted">
+    New uploads and tag changes take up to 15 seconds to show up in the results.
+  </p>
+
+  {% if result is not null %}
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Found files: {{ result.total }}</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        {% for file in result.results %}
+          {% set highlight = result.highlight(file) %}
+          <li class="list-group-item">
+            <h6 class="mb-1">
+              <a href="{{ path('file_info', {'uuid': file.uuid}) }}">
+                {% if highlight.original_filename is defined %}
+                  {{ search.highlighted(highlight.original_filename|first) }}
+                {% else %}
+                  {{ file.originalFilename }}
+                {% endif %}
+              </a>
+            </h6>
+            <span class="badge bg-success">{{ file.mimeType }}</span>
+            <span class="badge bg-secondary">{{ file.size }} bytes</span>
+            <span class="badge bg-secondary">{{ file.datetimeUploaded|date }}</span>
+            {% for tag in file.tags %}
+              <a href="{{ path('file_search', {'tagsAny': tag}) }}" class="badge bg-info text-dark text-decoration-none">{{ tag }}</a>
+            {% endfor %}
+            {% for key, values in highlight.metadata|default({}) %}
+              <div class="small">Metadata <code>{{ key }}</code>: {{ search.highlighted(values is iterable ? values|join(', ') : values) }}</div>
+            {% endfor %}
+          </li>
+        {% else %}
+          <li class="list-group-item">Nothing found.</li>
+        {% endfor %}
+      </ul>
+      <div class="card-footer">
+        <nav aria-label="Search results navigation">
+          <ul class="pagination">
+            {% set query = app.request.query.all %}
+            {% if previous is not null %}
+              <li class="page-item"><a class="page-link" href="{{ path('file_search', query|merge({'offset': previous})) }}">Previous</a></li>
+            {% else %}
+              <li class="page-item disabled"><a class="page-link">Previous</a></li>
+            {% endif %}
+            {% if next is not null %}
+              <li class="page-item"><a class="page-link" href="{{ path('file_search', query|merge({'offset': next})) }}">Next</a></li>
+            {% else %}
+              <li class="page-item disabled"><a class="page-link">Next</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
